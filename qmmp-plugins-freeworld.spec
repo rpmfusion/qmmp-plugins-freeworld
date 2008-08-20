@@ -1,6 +1,6 @@
 Name:		qmmp-plugins-freeworld
 Version:	0.2.0
-Release:	5%{?dist}
+Release:	6%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
 Group:		Applications/Multimedia
@@ -13,7 +13,7 @@ Source2:	qmmp-filter-provides.sh
 
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 
-BuildRequires:	cmake ffmpeg-devel >= 0.4.9-0.8 libmad-devel qt4-devel >= 4.2
+BuildRequires:	cmake ffmpeg-devel < 0.4.9-0.8 libmad-devel qt4-devel >= 4.2
 BuildRequires:	taglib-devel curl-devel
 BuildRequires:	qmmp = %{version}
 Requires:	qmmp = %{version}
@@ -28,14 +28,6 @@ This package contains plugins needed to play MPEG (.mp3) and WMA files.
 %setup -q -n qmmp-%{version}
 cp %{SOURCE2} .
 chmod +x qmmp-filter-provides.sh
-# adjust includes for the header move in latest ffmpeg
-sed -i \
-	-e 's|<avcodec.h|<libavcodec/avcodec.h|g' \
-	-e 's|g/avcodec.h|g/libavcodec/avcodec.h|g' \
-	-e 's|<avformat.h|<libavformat/avformat.h|g' \
-	-e 's|g/avformat.h|g/libavformat/avformat.h|g' \
-	src/plugins/Input/ffmpeg/decoder_ffmpeg.h \
-	src/plugins/Input/ffmpeg/decoderffmpegfactory.cpp
 
 
 %build
@@ -86,9 +78,12 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Wed Aug 20 2008 Karel Volny <kvolny@redhat.com> 0.2.0-6
+- reverted previous change, the new ffmpeg is not released in this branch
+
 * Tue Aug 19 2008 Karel Volny <kvolny@redhat.com> 0.2.0-5
 - adjusted includes for the header move in latest ffmpeg
-- upgrade ffmpeg-devel dependency
+- upgraded ffmpeg-devel dependency
 
 * Fri Aug 08 2008 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info - 0.2.0-4
 - rebuild for RPM Fusion
