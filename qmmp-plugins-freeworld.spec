@@ -1,6 +1,6 @@
 Name:		qmmp-plugins-freeworld
-Version:	0.2.0
-Release:	4%{?dist}
+Version:	0.2.2
+Release:	1%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
 Group:		Applications/Multimedia
@@ -13,7 +13,7 @@ Source2:	qmmp-filter-provides.sh
 
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 
-BuildRequires:	cmake ffmpeg-devel >= 0.4.9-0.8 libmad-devel qt-devel >= 4.2
+BuildRequires:	cmake ffmpeg-devel >= 0.4.9-0.47.20080614 libmad-devel qt-devel >= 4.2
 BuildRequires:	taglib-devel libcurl-devel
 BuildRequires:	qmmp = %{version}
 Requires:	qmmp = %{version}
@@ -35,7 +35,8 @@ sed -i \
 	-e 's|<avformat.h|<libavformat/avformat.h|g' \
 	-e 's|g/avformat.h|g/libavformat/avformat.h|g' \
 	src/plugins/Input/ffmpeg/decoder_ffmpeg.h \
-	src/plugins/Input/ffmpeg/decoderffmpegfactory.cpp
+	src/plugins/Input/ffmpeg/decoderffmpegfactory.cpp \
+	src/plugins/Input/ffmpeg/detailsdialog.cpp
 
 
 %build
@@ -86,9 +87,12 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Fri Sep 05 2008 Karel Volny <kvolny@redhat.com> 0.2.2-1
+- version bump
+
 * Wed Aug 20 2008 Karel Volny <kvolny@redhat.com> 0.2.0-4
 - adjusted includes for the header move in latest ffmpeg
-- upgrade ffmpeg-devel dependency
+- upgraded ffmpeg-devel dependency
 
 * Fri Aug 08 2008 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info - 0.2.0-3
 - rebuild
