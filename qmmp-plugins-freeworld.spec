@@ -1,5 +1,5 @@
 Name:		qmmp-plugins-freeworld
-Version:	0.2.2
+Version:	0.2.3
 Release:	1%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
@@ -87,6 +87,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Dec 08 2008 Karel Volny <kvolny@redhat.com> 0.2.3-1
+- version bump
+
 * Fri Sep 05 2008 Karel Volny <kvolny@redhat.com> 0.2.2-1
 - version bump
 
