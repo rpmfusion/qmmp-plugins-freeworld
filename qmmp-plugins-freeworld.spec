@@ -1,6 +1,6 @@
 Name:		qmmp-plugins-freeworld
 Version:	0.2.3
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
 Group:		Applications/Multimedia
@@ -10,11 +10,13 @@ Source:		http://qmmp.ylsoftware.com/files/qmmp-%{version}.tar.bz2
 Source2:	qmmp-filter-provides.sh
 %define		_use_internal_dependency_generator 0
 %define		__find_provides %{_builddir}/%{buildsubdir}/qmmp-filter-provides.sh
+# Patch to compile with Qt4-4.2 (as upstream requires Qt >= 4.3)
+Patch:          qmmp-plugins-0.2.3-qt42.patch
 
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 
-BuildRequires:	cmake ffmpeg-devel >= 0.4.9-0.47.20080614 libmad-devel qt-devel >= 4.2
-BuildRequires:	taglib-devel libcurl-devel
+BuildRequires:	cmake ffmpeg-devel >= 0.4.9-0.47.20080614 libmad-devel qt4-devel >= 4.2
+BuildRequires:	taglib-devel curl-devel
 BuildRequires:	qmmp = %{version}
 Requires:	qmmp = %{version}
 
@@ -37,9 +39,12 @@ sed -i \
 	src/plugins/Input/ffmpeg/decoder_ffmpeg.h \
 	src/plugins/Input/ffmpeg/decoderffmpegfactory.cpp \
 	src/plugins/Input/ffmpeg/detailsdialog.cpp
+# patch for Qt4 4.2
+%patch -p1
 
 
 %build
+export QTDIR="%{_libdir}/qt4/"
 %cmake \
 	-D USE_FLAC:BOOL=FALSE \
 	-D USE_VORBIS:BOOL=FALSE \
@@ -87,6 +92,11 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Tue Jan 20 2009 Karel Volny <kvolny@redhat.com> 0.2.3-3
+- version for EPEL
+- adjusted BuildRequires to match EPEL
+- patched for using qt4-4.2
+
 * Sat Dec 20 2008 Dominik Mierzejewski <rpm@greysector.net> 0.2.3-2
 - rebuild against new ffmpeg
 
