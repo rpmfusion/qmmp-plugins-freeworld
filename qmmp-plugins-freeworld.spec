@@ -15,7 +15,7 @@ Patch:          qmmp-plugins-0.2.3-qt42.patch
 
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 
-BuildRequires:	cmake ffmpeg-devel >= 0.4.9-0.47.20080614 libmad-devel qt4-devel >= 4.2
+BuildRequires:	cmake ffmpeg-devel >= 0.4.9-0.51.20080908 libmad-devel qt4-devel >= 4.2
 BuildRequires:	taglib-devel curl-devel
 BuildRequires:	qmmp = %{version}
 Requires:	qmmp = %{version}
