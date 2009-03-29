@@ -1,6 +1,6 @@
 Name:		qmmp-plugins-freeworld
 Version:	0.2.3
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
 Group:		Applications/Multimedia
@@ -87,6 +87,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Sun Mar 29 2009 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 0.2.3-3
+- rebuild for new F11 features
+
 * Sat Dec 20 2008 Dominik Mierzejewski <rpm@greysector.net> 0.2.3-2
 - rebuild against new ffmpeg
 
