@@ -1,6 +1,6 @@
 Name:		qmmp-plugins-freeworld
-Version:	0.2.3
-Release:	3%{?dist}
+Version:	0.3.0
+Release:	1%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
 Group:		Applications/Multimedia
@@ -13,7 +13,9 @@ Source2:	qmmp-filter-provides.sh
 
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 
-BuildRequires:	cmake ffmpeg-devel >= 0.4.9-0.47.20080614 libmad-devel qt-devel >= 4.2
+BuildRequires:	cmake ffmpeg-devel >= 0.4.9-0.47.20080614
+BuildRequires:	faad2-devel
+BuildRequires:	libmad-devel qt-devel >= 4.3
 BuildRequires:	taglib-devel libcurl-devel
 BuildRequires:	qmmp = %{version}
 Requires:	qmmp = %{version}
@@ -21,7 +23,8 @@ Requires:	qmmp = %{version}
 
 %description
 Qmmp is an audio-player, written with help of Qt library.
-This package contains plugins needed to play MPEG (.mp3) and WMA files.
+This package contains plugins needed to play AAC, MPEG (.mp3) and WMA files,
+and also the mplayer plugin for video playback.
 
 
 %prep
@@ -47,28 +50,41 @@ sed -i \
 	-D USE_MODPLUG:BOOL=FALSE \
 	-D USE_SNDFILE:BOOL=FALSE \
 	-D USE_WAVPACK:BOOL=FALSE \
+	-D USE_CUE:BOOL=FALSE \
+	-D USE_CDA:BOOL=FALSE \
 	-D USE_ALSA:BOOL=FALSE \
 	-D USE_OSS:BOOL=FALSE \
 	-D USE_JACK:BOOL=FALSE \
 	-D USE_PULSE:BOOL=FALSE \
 	-D USE_SRC:BOOL=FALSE \
+	-D USE_BS2B:BOOL=FALSE \
 	-D USE_ANALYZER:BOOL=FALSE \
+	-D USE_PROJECTM:BOOL=FALSE \
 	-D USE_DBUS:BOOL=FALSE \
+	-D USE_MPRIS:BOOL=FALSE \
 	-D USE_SCROBBLER:BOOL=FALSE \
 	-D USE_STATICON:BOOL=FALSE \
 	-D USE_NOTIFIER:BOOL=FALSE \
+	-D USE_LYRICS:BOOL=FALSE \
+	-D USE_HAL:BOOL=FALSE \
+	-D USE_HOTKEY:BOOL=FALSE \
+	-D USE_FILEOPS:BOOL=FALSE \
 	-D USE_QMMP_DIALOG:BOOL=FALSE \
 	-D CMAKE_INSTALL_PREFIX=/usr \
 	-D LIB_DIR=%{_lib} \
 	./
+make VERBOSE=1 %{?_smp_mflags} -C src/plugins/Input/aac
 make VERBOSE=1 %{?_smp_mflags} -C src/plugins/Input/ffmpeg
 make VERBOSE=1 %{?_smp_mflags} -C src/plugins/Input/mad
+make VERBOSE=1 %{?_smp_mflags} -C src/plugins/Input/mplayer
 
 
 %install
 rm -rf %{buildroot}
+make DESTDIR=%{buildroot} install -C src/plugins/Input/aac
 make DESTDIR=%{buildroot} install -C src/plugins/Input/ffmpeg
 make DESTDIR=%{buildroot} install -C src/plugins/Input/mad
+make DESTDIR=%{buildroot} install -C src/plugins/Input/mplayer
 
 
 %clean
@@ -87,6 +103,11 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Tue Aug 25 2009 Karel Volný <kvolny@redhat.com> 0.3.0-1
+- version bump
+- new plugins aac and mplayer
+- BuildRequires faad2-devel for AAC support
+
 * Sun Mar 29 2009 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 0.2.3-3
 - rebuild for new F11 features
 
