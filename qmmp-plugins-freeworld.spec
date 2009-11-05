@@ -1,5 +1,5 @@
 Name:		qmmp-plugins-freeworld
-Version:	0.3.0
+Version:	0.3.1
 Release:	1%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
@@ -103,6 +103,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Thu Nov 05 2009 Karel Volný <kvolny@redhat.com> 0.3.1-1
+- version bump
+
 * Tue Aug 25 2009 Karel Volný <kvolny@redhat.com> 0.3.0-1
 - version bump
 - new plugins aac and mplayer
