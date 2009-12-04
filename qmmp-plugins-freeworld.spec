@@ -1,6 +1,6 @@
 Name:		qmmp-plugins-freeworld
 Version:	0.3.1
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
 Group:		Applications/Multimedia
@@ -17,9 +17,8 @@ BuildRequires:	cmake ffmpeg-devel >= 0.4.9-0.47.20080614
 BuildRequires:	faad2-devel
 BuildRequires:	libmad-devel qt-devel >= 4.3
 BuildRequires:	taglib-devel libcurl-devel
-BuildRequires:	qmmp = %{version}
-Requires:	qmmp = %{version}
-
+BuildRequires:	qmmp%{?_isa} = %{version}
+Requires:	qmmp%{?_isa} = %{version}
 
 %description
 Qmmp is an audio-player, written with help of Qt library.
@@ -103,6 +102,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Fri Dec 04 2009 Karel Volný <kvolny@redhat.com> 0.3.1-2
+- add %%{?_isa} to require architecture match (wrt Fedora bug #543963)
+
 * Thu Nov 05 2009 Karel Volný <kvolny@redhat.com> 0.3.1-1
 - version bump
 
