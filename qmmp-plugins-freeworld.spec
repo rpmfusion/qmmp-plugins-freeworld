@@ -1,6 +1,6 @@
 Name:		qmmp-plugins-freeworld
-Version:	0.3.1
-Release:	2%{?dist}
+Version:	0.3.2
+Release:	1%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
 Group:		Applications/Multimedia
@@ -102,6 +102,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Thu Jan 14 2010 Karel Volný <kvolny@redhat.com> 0.3.2-1
+- version bump
+
 * Fri Dec 04 2009 Karel Volný <kvolny@redhat.com> 0.3.1-2
 - add %%{?_isa} to require architecture match (wrt Fedora bug #543963)
 
