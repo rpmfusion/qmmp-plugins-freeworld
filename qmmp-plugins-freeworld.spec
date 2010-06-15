@@ -1,5 +1,5 @@
 Name:		qmmp-plugins-freeworld
-Version:	0.3.4
+Version:	0.4.0
 Release:	1%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
@@ -14,8 +14,10 @@ Source2:	qmmp-filter-provides.sh
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 
 BuildRequires:	cmake ffmpeg-devel >= 0.4.9-0.47.20080614
+BuildRequires:	enca-devel
 BuildRequires:	faad2-devel
 BuildRequires:	libmad-devel qt-devel >= 4.3
+BuildRequires:	libmms-devel
 BuildRequires:	taglib-devel libcurl-devel
 BuildRequires:	qmmp%{?_isa} = %{version}
 Requires:	qmmp%{?_isa} = %{version}
@@ -37,12 +39,15 @@ sed -i \
 	-e 's|<avformat.h|<libavformat/avformat.h|g' \
 	-e 's|g/avformat.h|g/libavformat/avformat.h|g' \
 	src/plugins/Input/ffmpeg/decoder_ffmpeg.h \
-	src/plugins/Input/ffmpeg/decoderffmpegfactory.cpp \
-	src/plugins/Input/ffmpeg/detailsdialog.cpp
+	src/plugins/Input/ffmpeg/decoderffmpegfactory.cpp
 
 
 %build
+# the plugin groups, as separated by newlines, are:
+# Transport, Input, Output, Effect, Visual, General, File Dialogs
 %cmake \
+	-D USE_CURL:BOOL=FALSE \
+\
 	-D USE_FLAC:BOOL=FALSE \
 	-D USE_VORBIS:BOOL=FALSE \
 	-D USE_MPC:BOOL=FALSE \
@@ -51,15 +56,20 @@ sed -i \
 	-D USE_WAVPACK:BOOL=FALSE \
 	-D USE_CUE:BOOL=FALSE \
 	-D USE_CDA:BOOL=FALSE \
+\
 	-D USE_ALSA:BOOL=FALSE \
 	-D USE_OSS:BOOL=FALSE \
 	-D USE_JACK:BOOL=FALSE \
 	-D USE_PULSE:BOOL=FALSE \
+	-D USE_NULL:BOOL=FALSE \
+\
 	-D USE_SRC:BOOL=FALSE \
 	-D USE_BS2B:BOOL=FALSE \
+	-D USE_LADSPA:BOOL=FALSE \
+\
 	-D USE_ANALYZER:BOOL=FALSE \
 	-D USE_PROJECTM:BOOL=FALSE \
-	-D USE_DBUS:BOOL=FALSE \
+\
 	-D USE_MPRIS:BOOL=FALSE \
 	-D USE_SCROBBLER:BOOL=FALSE \
 	-D USE_STATICON:BOOL=FALSE \
@@ -68,22 +78,29 @@ sed -i \
 	-D USE_HAL:BOOL=FALSE \
 	-D USE_HOTKEY:BOOL=FALSE \
 	-D USE_FILEOPS:BOOL=FALSE \
+	-D USE_COVER:BOOL=FALSE \
+	-D USE_KDENOTIFY:BOOL=FALSE \
+\
 	-D USE_QMMP_DIALOG:BOOL=FALSE \
+\
 	-D CMAKE_INSTALL_PREFIX=/usr \
 	-D LIB_DIR=%{_lib} \
 	./
+
+make VERBOSE=1 %{?_smp_mflags} -C src/plugins/Engines/mplayer
 make VERBOSE=1 %{?_smp_mflags} -C src/plugins/Input/aac
 make VERBOSE=1 %{?_smp_mflags} -C src/plugins/Input/ffmpeg
 make VERBOSE=1 %{?_smp_mflags} -C src/plugins/Input/mad
-make VERBOSE=1 %{?_smp_mflags} -C src/plugins/Input/mplayer
+make VERBOSE=1 %{?_smp_mflags} -C src/plugins/Transports/mms
 
 
 %install
 rm -rf %{buildroot}
+make DESTDIR=%{buildroot} install -C src/plugins/Engines/mplayer
 make DESTDIR=%{buildroot} install -C src/plugins/Input/aac
 make DESTDIR=%{buildroot} install -C src/plugins/Input/ffmpeg
 make DESTDIR=%{buildroot} install -C src/plugins/Input/mad
-make DESTDIR=%{buildroot} install -C src/plugins/Input/mplayer
+make DESTDIR=%{buildroot} install -C src/plugins/Transports/mms
 
 
 %clean
@@ -92,8 +109,12 @@ rm -rf %{buildroot}
 
 %files
 %defattr(0755,root,root,0755)
-%dir %{_libdir}/qmmp/Input
+# there's only mplayer plugin now, so own the directory
+%dir %{_libdir}/qmmp/Engines
+%{_libdir}/qmmp/Engines/*.so
+# Input & Transports dirs are owned by qmmp already
 %{_libdir}/qmmp/Input/*.so
+%{_libdir}/qmmp/Transports/*.so
 
 
 %post -p /sbin/ldconfig
@@ -102,6 +123,12 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Tue Jun 15 2010 Karel Volný <kvolny@redhat.com> 0.4.0-1
+- version bump
+- new MMS transport plugin
+- BuildRequires libmms-devel for MMS support
+- BuildRequires enca-devel for encoding detection
+
 * Tue Apr 20 2010 Karel Volný <kvolny@redhat.com> 0.3.4-1
 - version bump
 
