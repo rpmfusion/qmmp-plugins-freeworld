@@ -1,5 +1,5 @@
 Name:		qmmp-plugins-freeworld
-Version:	0.4.1
+Version:	0.4.2
 Release:	1%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
@@ -123,6 +123,10 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Thu Sep 16 2010 Karel Volný <kvolny@redhat.com> 0.4.2-1
+- version bump
+- fixes possible freezes with mplayer plugin
+
 * Fri Jul 02 2010 Karel Volný <kvolny@redhat.com> 0.4.1-1
 - version bump
 - fixes in flv playback and mplayer support
