@@ -1,5 +1,5 @@
 Name:		qmmp-plugins-freeworld
-Version:	0.4.3
+Version:	0.5.1
 Release:	1%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
@@ -56,16 +56,22 @@ sed -i \
 	-D USE_WAVPACK:BOOL=FALSE \
 	-D USE_CUE:BOOL=FALSE \
 	-D USE_CDA:BOOL=FALSE \
+	-D USE_MIDI:BOOL=FALSE \
+	-D USE_GME:BOOL=FALSE \
 \
 	-D USE_ALSA:BOOL=FALSE \
-	-D USE_OSS:BOOL=FALSE \
 	-D USE_JACK:BOOL=FALSE \
+	-D USE_OSS:BOOL=FALSE \
+	-D USE_OSS4:BOOL=FALSE \
 	-D USE_PULSE:BOOL=FALSE \
 	-D USE_NULL:BOOL=FALSE \
+	-D USE_WAVEOUT:BOOL=FALSE \
 \
 	-D USE_SRC:BOOL=FALSE \
 	-D USE_BS2B:BOOL=FALSE \
 	-D USE_LADSPA:BOOL=FALSE \
+	-D USE_CROSSFADE:BOOL=FALSE \
+	-D USE_STEREO:BOOL=FALSE \
 \
 	-D USE_ANALYZER:BOOL=FALSE \
 	-D USE_PROJECTM:BOOL=FALSE \
@@ -76,6 +82,7 @@ sed -i \
 	-D USE_NOTIFIER:BOOL=FALSE \
 	-D USE_LYRICS:BOOL=FALSE \
 	-D USE_HAL:BOOL=FALSE \
+	-D USE_UDISKS:BOOL=FALSE \
 	-D USE_HOTKEY:BOOL=FALSE \
 	-D USE_FILEOPS:BOOL=FALSE \
 	-D USE_COVER:BOOL=FALSE \
@@ -123,6 +130,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Fri Jun 24 2011 Karel Volný <kvolny@redhat.com> 0.5.1-1
+- version bump
+
 * Wed Dec 15 2010 Karel Volný <kvolny@redhat.com> 0.4.3-1
 - version bump
 
