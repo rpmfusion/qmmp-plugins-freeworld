@@ -10,6 +10,7 @@ Source:		http://qmmp.ylsoftware.com/files/qmmp-%{version}.tar.bz2
 Source2:	qmmp-filter-provides.sh
 %define		_use_internal_dependency_generator 0
 %define		__find_provides %{_builddir}/%{buildsubdir}/qmmp-filter-provides.sh
+Patch0:		qmmp-ffmpeg-0.4.9-0.52.20080908.patch
 
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 
@@ -19,7 +20,7 @@ BuildRequires:	faad2-devel
 BuildRequires:	libmad-devel qt-devel >= 4.3
 BuildRequires:	libmms-devel
 BuildRequires:	taglib-devel libcurl-devel
-BuildRequires:	qmmp%{?_isa} = %{version}
+#BuildRequires:	qmmp%{?_isa} = %{version}
 Requires:	qmmp%{?_isa} = %{version}
 
 %description
@@ -32,14 +33,7 @@ and also the mplayer plugin for video playback.
 %setup -q -n qmmp-%{version}
 cp %{SOURCE2} .
 chmod +x qmmp-filter-provides.sh
-# adjust includes for the header move in latest ffmpeg
-sed -i \
-	-e 's|<avcodec.h|<libavcodec/avcodec.h|g' \
-	-e 's|g/avcodec.h|g/libavcodec/avcodec.h|g' \
-	-e 's|<avformat.h|<libavformat/avformat.h|g' \
-	-e 's|g/avformat.h|g/libavformat/avformat.h|g' \
-	src/plugins/Input/ffmpeg/decoder_ffmpeg.h \
-	src/plugins/Input/ffmpeg/decoderffmpegfactory.cpp
+%patch0
 
 
 %build
@@ -130,8 +124,9 @@ rm -rf %{buildroot}
 
 
 %changelog
-* Fri Jun 24 2011 Karel Volný <kvolny@redhat.com> 0.5.1-1
+* Tue Aug 30 2011 Karel Volný <kvolny@redhat.com> 0.5.1-1
 - version bump
+- patch to compile with latest ffmpeg available in EL-6
 
 * Wed Dec 15 2010 Karel Volný <kvolny@redhat.com> 0.4.3-1
 - version bump

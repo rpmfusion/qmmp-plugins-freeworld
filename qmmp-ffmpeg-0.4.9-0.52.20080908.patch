@@ -1,0 +1,61 @@
+--- src/plugins/Input/ffmpeg/CMakeLists.txt~	2011-04-25 08:09:08.000000000 +0200
++++ src/plugins/Input/ffmpeg/CMakeLists.txt	2011-08-30 17:50:09.848727339 +0200
+@@ -28,7 +28,7 @@
+ link_directories(${CMAKE_CURRENT_BINARY_DIR}/../../../qmmp)
+ 
+ # libffmpeg
+-pkg_check_modules(FFMPEG libavcodec>=52.20.0 libavformat>=52.31.0 libavutil>=49.15.0)
++pkg_check_modules(FFMPEG libavcodec>=51.71.0 libavformat>=52.22.1 libavutil>=49.10.0)
+ 
+ include_directories(${FFMPEG_INCLUDE_DIRS})
+ link_directories(${FFMPEG_LIBRARY_DIRS})
+--- src/plugins/Input/ffmpeg/decoderffmpegfactory.cpp    2011-05-16 10:12:34.000000000 +0200
++++ src/plugins/Input/ffmpeg/decoderffmpegfactory.cpp~   2010-05-11 20:20:28.000000000 +0200
+@@ -130,40 +162,13 @@
+ 
+     if (useMetaData)
+     {
+-        AVMetadataTag *album = av_metadata_get(in->metadata,"album",0,0);
+-        if(!album)
+-            album = av_metadata_get(in->metadata,"WM/AlbumTitle",0,0);
+-        AVMetadataTag *artist = av_metadata_get(in->metadata,"artist",0,0);
+-        if(!artist)
+-            artist = av_metadata_get(in->metadata,"author",0,0);
+-        AVMetadataTag *comment = av_metadata_get(in->metadata,"comment",0,0);
+-        AVMetadataTag *genre = av_metadata_get(in->metadata,"genre",0,0);
+-        AVMetadataTag *title = av_metadata_get(in->metadata,"title",0,0);
+-        AVMetadataTag *year = av_metadata_get(in->metadata,"WM/Year",0,0);
+-        if(!year)
+-            year = av_metadata_get(in->metadata,"year",0,0);
+-        if(!year)
+-            year = av_metadata_get(in->metadata,"date",0,0);
+-        AVMetadataTag *track = av_metadata_get(in->metadata,"track",0,0);
+-        if(!track)
+-            track = av_metadata_get(in->metadata,"WM/Track",0,0);
+-        if(!track)
+-            track = av_metadata_get(in->metadata,"WM/TrackNumber",0,0);
+-
+-        if(album)
+-            info->setMetaData(Qmmp::ALBUM, QString::fromUtf8(album->value).trimmed());
+-        if(artist)
+-            info->setMetaData(Qmmp::ARTIST, QString::fromUtf8(artist->value).trimmed());
+-        if(comment)
+-            info->setMetaData(Qmmp::COMMENT, QString::fromUtf8(comment->value).trimmed());
+-        if(genre)
+-            info->setMetaData(Qmmp::GENRE, QString::fromUtf8(genre->value).trimmed());
+-        if(title)
+-            info->setMetaData(Qmmp::TITLE, QString::fromUtf8(title->value).trimmed());
+-        if(year)
+-            info->setMetaData(Qmmp::YEAR, year->value);
+-        if(track)
+-            info->setMetaData(Qmmp::TRACK, track->value);
++        info->setMetaData(Qmmp::ALBUM, QString::fromUtf8(in->album).trimmed());
++        info->setMetaData(Qmmp::ARTIST, QString::fromUtf8(in->author).trimmed());
++        info->setMetaData(Qmmp::COMMENT, QString::fromUtf8(in->comment).trimmed());
++        info->setMetaData(Qmmp::GENRE, QString::fromUtf8(in->genre).trimmed());
++        info->setMetaData(Qmmp::TITLE, QString::fromUtf8(in->title).trimmed());
++        info->setMetaData(Qmmp::YEAR, in->year);
++        info->setMetaData(Qmmp::TRACK, in->track);
+     }
+     info->setLength(in->duration/AV_TIME_BASE);
+     av_close_input_file(in);
