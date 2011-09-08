@@ -1,6 +1,6 @@
 Name:		qmmp-plugins-freeworld
 Version:	0.5.1
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
 Group:		Applications/Multimedia
@@ -13,13 +13,14 @@ Source2:	qmmp-filter-provides.sh
 
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 
-BuildRequires:	cmake ffmpeg-devel >= 0.4.9-0.47.20080614
+BuildRequires:	cmake
+BuildRequires:	ffmpeg-devel
 BuildRequires:	enca-devel
 BuildRequires:	faad2-devel
 BuildRequires:	libmad-devel qt-devel >= 4.3
 BuildRequires:	libmms-devel
 BuildRequires:	taglib-devel libcurl-devel
-BuildRequires:	qmmp%{?_isa} = %{version}
+#BuildRequires:	qmmp%{?_isa} = %{version}
 Requires:	qmmp%{?_isa} = %{version}
 
 %description
@@ -130,6 +131,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Thu Sep 08 2011 Karel Volný <kvolny@redhat.com> 0.5.1-2
+- rebuild for new ffmpeg
+
 * Fri Jun 24 2011 Karel Volný <kvolny@redhat.com> 0.5.1-1
 - version bump
 
