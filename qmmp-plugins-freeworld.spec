@@ -1,6 +1,6 @@
 Name:		qmmp-plugins-freeworld
-Version:	0.5.1
-Release:	3%{?dist}
+Version:	0.5.3
+Release:	1%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
 Group:		Applications/Multimedia
@@ -10,6 +10,8 @@ Source:		http://qmmp.ylsoftware.com/files/qmmp-%{version}.tar.bz2
 Source2:	qmmp-filter-provides.sh
 %define		_use_internal_dependency_generator 0
 %define		__find_provides %{_builddir}/%{buildsubdir}/qmmp-filter-provides.sh
+# Sent upstream via email 20120123
+Patch0:		qmmp-0.5.3-mms-include-usleep.patch
 
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 
@@ -31,6 +33,7 @@ and also the mplayer plugin for video playback.
 
 %prep
 %setup -q -n qmmp-%{version}
+%patch0 -p1
 cp %{SOURCE2} .
 chmod +x qmmp-filter-provides.sh
 # adjust includes for the header move in latest ffmpeg
@@ -131,6 +134,10 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Jan 23 2012 Karel Volný <kvolny@redhat.com> 0.5.3-1
+- version bump
+- patch to include usleep from QThread (qmmp-0.5.3-mms-include-usleep.patch)
+
 * Wed Nov 23 2011 Nicolas Chauvet <kwizart@gmail.com> - 0.5.1-3
 - Rebuilt for libcdio
 
