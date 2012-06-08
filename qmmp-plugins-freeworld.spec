@@ -1,5 +1,5 @@
 Name:		qmmp-plugins-freeworld
-Version:	0.5.4
+Version:	0.5.5
 Release:	1%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
@@ -131,6 +131,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Fri Jun 08 2012 Karel Volný <kvolny@redhat.com> 0.5.5-1
+- version bump
+
 * Fri Mar 02 2012 Karel Volný <kvolny@redhat.com> 0.5.4-1
 - version bump
 - removed patch to include usleep from QThread (qmmp-0.5.3-mms-include-usleep.patch)
