@@ -1,5 +1,5 @@
 Name:		qmmp-plugins-freeworld
-Version:	0.5.5
+Version:	0.5.6
 Release:	1%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
@@ -131,6 +131,10 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Jun 18 2012 Karel Volný <kvolny@redhat.com> 0.5.6-1
+- version bump
+- adds support for ffmpeg-0.11
+
 * Fri Jun 08 2012 Karel Volný <kvolny@redhat.com> 0.5.5-1
 - version bump
 
