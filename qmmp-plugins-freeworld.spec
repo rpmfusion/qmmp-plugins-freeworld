@@ -1,6 +1,6 @@
 Name:		qmmp-plugins-freeworld
 Version:	0.6.8
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
 Group:		Applications/Multimedia
@@ -131,6 +131,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Sun Apr 28 2013 Nicolas Chauvet <kwizart@gmail.com> - 0.6.8-2
+- https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
+
 * Tue Apr 02 2013 Karel Volný <kvolny@redhat.com> 0.6.8-1
 - version bump
 
