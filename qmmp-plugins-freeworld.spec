@@ -1,11 +1,11 @@
 Name:		qmmp-plugins-freeworld
-Version:	0.6.8
-Release:	2%{?dist}
+Version:	0.7.0
+Release:	1%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
 Group:		Applications/Multimedia
 License:	GPLv2+
-URL:		http://qmmp.ylsoftware.com/index_en.html
+URL:		http://qmmp.ylsoftware.com/
 Source:		http://qmmp.ylsoftware.com/files/qmmp-%{version}.tar.bz2
 Source2:	qmmp-filter-provides.sh
 %define		_use_internal_dependency_generator 0
@@ -131,6 +131,10 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Thu May 02 2013 Karel Volný <kvolny@redhat.com> 0.7.0-1
+- version bump
+- project URLs changed
+
 * Sun Apr 28 2013 Nicolas Chauvet <kwizart@gmail.com> - 0.6.8-2
 - https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
 
