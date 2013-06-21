@@ -1,5 +1,5 @@
 Name:		qmmp-plugins-freeworld
-Version:	0.5.5
+Version:	0.6.4
 Release:	1%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
@@ -131,6 +131,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Fri Jun 21 2013 Karel Volný <kvolny@redhat.com> 0.6.4-1
+- version bump to match fix for Fedora bug #971852
+
 * Fri Jun 08 2012 Karel Volný <kvolny@redhat.com> 0.5.5-1
 - version bump
 - removed qmmp-0.5.3-mms-include-usleep.patch (accepted upstream)
