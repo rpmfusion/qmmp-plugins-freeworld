@@ -1,5 +1,5 @@
 Name:		qmmp-plugins-freeworld
-Version:	0.7.4
+Version:	0.7.7
 Release:	1%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
@@ -21,7 +21,7 @@ BuildRequires:	libmad-devel qt-devel >= 4.3
 BuildRequires:	libmms-devel
 BuildRequires:	taglib-devel libcurl-devel
 #BuildRequires:	qmmp%{?_isa} = %{version}
-Requires:	qmmp%{?_isa} = %{version}
+#Requires:	qmmp%{?_isa} = %{version}
 
 %description
 Qmmp is an audio-player, written with help of Qt library.
@@ -131,6 +131,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Aug 04 2014 Karel Volný <kvolny@redhat.com> 0.7.7-1
+- version bump
+
 * Fri Jan 24 2014 Karel Volný <kvolny@redhat.com> 0.7.4-1
 - version bump
 
