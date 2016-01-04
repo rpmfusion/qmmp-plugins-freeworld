@@ -1,5 +1,5 @@
 Name:		qmmp-plugins-freeworld
-Version:	0.8.3
+Version:	0.9.5
 Release:	1%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
@@ -20,7 +20,6 @@ BuildRequires:	faad2-devel
 BuildRequires:	libmad-devel qt-devel >= 4.3
 BuildRequires:	libmms-devel
 BuildRequires:	taglib-devel libcurl-devel
-#BuildRequires:	qmmp%{?_isa} = %{version}
 Requires:	qmmp%{?_isa} = %{version}
 
 %description
@@ -131,6 +130,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Jan 04 2016 Karel Volný <kvolny@redhat.com> 0.9.5-1
+- version bump
+
 * Mon Jun 29 2015 Karel Volný <kvolny@redhat.com> 0.8.3-1
 - version bump
 
