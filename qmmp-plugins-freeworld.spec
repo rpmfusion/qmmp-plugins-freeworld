@@ -1,5 +1,5 @@
 Name:		qmmp-plugins-freeworld
-Version:	0.9.5
+Version:	0.9.6
 Release:	1%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
@@ -11,9 +11,8 @@ Source2:	qmmp-filter-provides.sh
 %define		_use_internal_dependency_generator 0
 %define		__find_provides %{_builddir}/%{buildsubdir}/qmmp-filter-provides.sh
 
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
-
 BuildRequires:	cmake
+BuildRequires:	desktop-file-utils
 BuildRequires:	ffmpeg-devel
 BuildRequires:	enca-devel
 BuildRequires:	faad2-devel
@@ -102,34 +101,86 @@ make VERBOSE=1 %{?_smp_mflags} -C src/plugins/Transports/mms
 
 
 %install
-rm -rf %{buildroot}
 make DESTDIR=%{buildroot} install -C src/plugins/Engines/mplayer
 make DESTDIR=%{buildroot} install -C src/plugins/Input/aac
 make DESTDIR=%{buildroot} install -C src/plugins/Input/ffmpeg
 make DESTDIR=%{buildroot} install -C src/plugins/Input/mad
 make DESTDIR=%{buildroot} install -C src/plugins/Transports/mms
-
-
-%clean
-rm -rf %{buildroot}
+## install .desktop files for MimeType associations
+mkdir -p %{buildroot}/%{_datadir}/applications/
+# aac
+sed -e "/MimeType/c\MimeType=audio/aac;audio/aacp;" -e "/Actions/,$ c\NoDisplay=true" \
+    src/app/qmmp.desktop \
+    > %{buildroot}/%{_datadir}/applications/%{name}-aac.desktop
+sed -e "/MimeType/c\MimeType=audio/aac;audio/aacp;" \
+    src/app/qmmp_enqueue.desktop \
+    > %{buildroot}/%{_datadir}/applications/%{name}-aac_enqueue.desktop
+desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-aac.desktop
+desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-aac_enqueue.desktop
+# ffmpeg
+sed -e "/MimeType/c\MimeType=audio/aac;audio/aacp;audio/x-ms-wma;audio/mpeg;audio/x-ffmpeg-shorten;audio/3gpp;audio/3gpp2;audio/mp4;audio/MP4A-LATM;audio/mpeg4-generic;audio/m4a;audio/ac3;audio/eac3;audio/dts;audio/true-hd;audio/x-matroska;" \
+    -e "/Actions/,$ c\NoDisplay=true" \
+    src/app/qmmp.desktop \
+    > %{buildroot}/%{_datadir}/applications/%{name}-ffmpeg.desktop
+sed -e "/MimeType/c\MimeType=audio/aac;audio/aacp;audio/x-ms-wma;audio/mpeg;audio/x-ffmpeg-shorten;audio/3gpp;audio/3gpp2;audio/mp4;audio/MP4A-LATM;audio/mpeg4-generic;audio/m4a;audio/ac3;audio/eac3;audio/dts;audio/true-hd;audio/x-matroska;" \
+    src/app/qmmp_enqueue.desktop \
+    > %{buildroot}/%{_datadir}/applications/%{name}-ffmpeg_enqueue.desktop
+desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-ffmpeg.desktop
+desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-ffmpeg_enqueue.desktop
+# mad
+sed -e "/MimeType/c\MimeType=audio/mp3;audio/mpeg;" -e "/Actions/,$ c\NoDisplay=true" \
+    src/app/qmmp.desktop \
+    > %{buildroot}/%{_datadir}/applications/%{name}-mad.desktop
+sed -e "/MimeType/c\MimeType=audio/mp3;audio/mpeg;" \
+    src/app/qmmp_enqueue.desktop \
+    > %{buildroot}/%{_datadir}/applications/%{name}-mad_enqueue.desktop
+desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-mad.desktop
+desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-mad_enqueue.desktop
 
 
 %files
-%defattr(0755,root,root,0755)
 # there's only mplayer plugin now, so own the directory
 %dir %{_libdir}/qmmp/Engines
 %{_libdir}/qmmp/Engines/*.so
 # Input & Transports dirs are owned by qmmp already
 %{_libdir}/qmmp/Input/*.so
 %{_libdir}/qmmp/Transports/*.so
+%{_datadir}/applications/%{name}-aac.desktop
+%{_datadir}/applications/%{name}-aac_enqueue.desktop
+%{_datadir}/applications/%{name}-ffmpeg.desktop
+%{_datadir}/applications/%{name}-ffmpeg_enqueue.desktop
+%{_datadir}/applications/%{name}-mad.desktop
+%{_datadir}/applications/%{name}-mad_enqueue.desktop
 
 
-%post -p /sbin/ldconfig
+%post
+/sbin/ldconfig
+%{_bindir}/update-desktop-database &> /dev/null || :
+touch --no-create %{_datadir}/icons/hicolor || :
+if [ -x %{_bindir}/gtk-update-icon-cache ]; then
+	%{_bindir}/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor || :
+fi
  
-%postun -p /sbin/ldconfig
+%postun
+/sbin/ldconfig
+/sbin/ldconfig
+%{_bindir}/update-desktop-database &> /dev/null || :
+touch --no-create %{_datadir}/icons/hicolor || :
+if [ -x %{_bindir}/gtk-update-icon-cache ]; then
+	%{_bindir}/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor || :
+fi
 
 
 %changelog
+* Tue Jan 12 2016 Karel Volný <kvolny@redhat.com> 0.9.6-1
+- version bump
+- updated provides filtering
+- add separate .desktop file for each plugin for MimeType associations
+- spec cleanups as per newer guidelines
+ - removed BuildRoot definition
+ - no longer remove buildroot, dropped clean section
+ - removed defattr
+
 * Mon Jan 04 2016 Karel Volný <kvolny@redhat.com> 0.9.5-1
 - version bump
 
