@@ -1,5 +1,5 @@
 Name:		qmmp-plugins-freeworld
-Version:	0.9.6
+Version:	1.1.0
 Release:	1%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
@@ -16,8 +16,10 @@ BuildRequires:	desktop-file-utils
 BuildRequires:	ffmpeg-devel
 BuildRequires:	enca-devel
 BuildRequires:	faad2-devel
-BuildRequires:	libmad-devel qt-devel >= 4.3
+BuildRequires:	libmad-devel
 BuildRequires:	libmms-devel
+BuildRequires:	qt5-linguist
+BuildRequires:	qt5-qtbase-devel
 BuildRequires:	taglib-devel libcurl-devel
 Requires:	qmmp%{?_isa} = %{version}
 
@@ -57,6 +59,8 @@ sed -i \
 	-D USE_CDA:BOOL=FALSE \
 	-D USE_MIDI:BOOL=FALSE \
 	-D USE_GME:BOOL=FALSE \
+	-D USE_OPUS:BOOL=FALSE \
+	-D USE_SID:BOOL=FALSE \
 \
 	-D USE_ALSA:BOOL=FALSE \
 	-D USE_JACK:BOOL=FALSE \
@@ -82,12 +86,20 @@ sed -i \
 	-D USE_LYRICS:BOOL=FALSE \
 	-D USE_HAL:BOOL=FALSE \
 	-D USE_UDISKS:BOOL=FALSE \
+	-D USE_UDISKS2:BOOL=FALSE \
 	-D USE_HOTKEY:BOOL=FALSE \
+	-D USE_GNOMEHOTKEY:BOOL=FALSE \
 	-D USE_FILEOPS:BOOL=FALSE \
 	-D USE_COVER:BOOL=FALSE \
 	-D USE_KDENOTIFY:BOOL=FALSE \
+	-D USE_CONVERTER:BOOL=FALSE \
+	-D USE_RGSCAN:BOOL=FALSE \
+	-D USE_SB:BOOL=FALSE \
+	-D USE_TRACKCHANGE:BOOL=FALSE \
+	-D USE_COPYPASTE:BOOL=FALSE \
 \
 	-D USE_QMMP_DIALOG:BOOL=FALSE \
+	-D USE_TWO_PANEL_DIALOG:BOOL=FALSE \
 \
 	-D CMAKE_INSTALL_PREFIX=/usr \
 	-D LIB_DIR=%{_lib} \
@@ -172,6 +184,11 @@ fi
 
 
 %changelog
+* Fri Jun 24 2016 Karel Volný <kvolny@redhat.com> 1.1.0-1
+- version bump to 1.1.0
+- uses Qt5
+- disabled build of some more plugins present in base qmmp
+
 * Tue Jan 12 2016 Karel Volný <kvolny@redhat.com> 0.9.6-1
 - version bump
 - updated provides filtering
