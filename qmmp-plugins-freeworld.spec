@@ -1,6 +1,6 @@
 Name:		qmmp-plugins-freeworld
-Version:	1.1.1
-Release:	2%{?dist}
+Version:	1.1.2
+Release:	1%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
 Group:		Applications/Multimedia
@@ -184,6 +184,9 @@ fi
 
 
 %changelog
+* Thu Sep 08 2016 Sérgio Basto <sergio@serjux.com> - 1.1.2-1
+- Sync to 1.1.2
+
 * Sat Jul 30 2016 Julian Sikorski <belegdol@fedoraproject.org> - 1.1.1-2
 - Rebuilt for ffmpeg-3.1.1
 
