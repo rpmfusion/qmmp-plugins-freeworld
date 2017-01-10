@@ -1,5 +1,5 @@
 Name:		qmmp-plugins-freeworld
-Version:	0.7.7
+Version:	0.8.8
 Release:	1%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
@@ -17,7 +17,7 @@ BuildRequires:	cmake
 BuildRequires:	ffmpeg-devel
 BuildRequires:	enca-devel
 BuildRequires:	faad2-devel
-BuildRequires:	libmad-devel qt-devel >= 4.3
+BuildRequires:	qt-devel >= 4.3
 BuildRequires:	libmms-devel
 BuildRequires:	taglib-devel libcurl-devel
 #BuildRequires:	qmmp%{?_isa} = %{version}
@@ -51,6 +51,7 @@ sed -i \
 \
 	-D USE_FLAC:BOOL=FALSE \
 	-D USE_VORBIS:BOOL=FALSE \
+	-D USE_MAD:BOOL=FALSE \
 	-D USE_MPC:BOOL=FALSE \
 	-D USE_MODPLUG:BOOL=FALSE \
 	-D USE_SNDFILE:BOOL=FALSE \
@@ -98,7 +99,6 @@ sed -i \
 make VERBOSE=1 %{?_smp_mflags} -C src/plugins/Engines/mplayer
 make VERBOSE=1 %{?_smp_mflags} -C src/plugins/Input/aac
 make VERBOSE=1 %{?_smp_mflags} -C src/plugins/Input/ffmpeg
-make VERBOSE=1 %{?_smp_mflags} -C src/plugins/Input/mad
 make VERBOSE=1 %{?_smp_mflags} -C src/plugins/Transports/mms
 
 
@@ -107,7 +107,6 @@ rm -rf %{buildroot}
 make DESTDIR=%{buildroot} install -C src/plugins/Engines/mplayer
 make DESTDIR=%{buildroot} install -C src/plugins/Input/aac
 make DESTDIR=%{buildroot} install -C src/plugins/Input/ffmpeg
-make DESTDIR=%{buildroot} install -C src/plugins/Input/mad
 make DESTDIR=%{buildroot} install -C src/plugins/Transports/mms
 
 
@@ -131,6 +130,10 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Jan 02 2017 Karel Volný <kvolny@redhat.com> 0.8.8-1
+- synchronised with EPEL7
+- dropped MAD plugin, now in EPEL (rhbz#1409566)
+
 * Mon Aug 04 2014 Karel Volný <kvolny@redhat.com> 0.7.7-1
 - version bump
 
