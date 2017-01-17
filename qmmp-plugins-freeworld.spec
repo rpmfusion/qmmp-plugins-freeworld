@@ -1,5 +1,5 @@
 Name:		qmmp-plugins-freeworld
-Version:	1.1.4
+Version:	1.1.6
 Release:	1%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
@@ -16,7 +16,6 @@ BuildRequires:	desktop-file-utils
 BuildRequires:	ffmpeg-devel
 BuildRequires:	enca-devel
 BuildRequires:	faad2-devel
-BuildRequires:	libmad-devel
 BuildRequires:	libmms-devel
 BuildRequires:	qt5-linguist
 BuildRequires:	qt5-qtbase-devel
@@ -51,6 +50,7 @@ sed -i \
 \
 	-D USE_FLAC:BOOL=FALSE \
 	-D USE_VORBIS:BOOL=FALSE \
+	-D USE_MAD:BOOL=FALSE \
 	-D USE_MPC:BOOL=FALSE \
 	-D USE_MODPLUG:BOOL=FALSE \
 	-D USE_SNDFILE:BOOL=FALSE \
@@ -108,7 +108,6 @@ sed -i \
 make VERBOSE=1 %{?_smp_mflags} -C src/plugins/Engines/mplayer
 make VERBOSE=1 %{?_smp_mflags} -C src/plugins/Input/aac
 make VERBOSE=1 %{?_smp_mflags} -C src/plugins/Input/ffmpeg
-make VERBOSE=1 %{?_smp_mflags} -C src/plugins/Input/mad
 make VERBOSE=1 %{?_smp_mflags} -C src/plugins/Transports/mms
 
 
@@ -116,7 +115,6 @@ make VERBOSE=1 %{?_smp_mflags} -C src/plugins/Transports/mms
 make DESTDIR=%{buildroot} install -C src/plugins/Engines/mplayer
 make DESTDIR=%{buildroot} install -C src/plugins/Input/aac
 make DESTDIR=%{buildroot} install -C src/plugins/Input/ffmpeg
-make DESTDIR=%{buildroot} install -C src/plugins/Input/mad
 make DESTDIR=%{buildroot} install -C src/plugins/Transports/mms
 ## install .desktop files for MimeType associations
 mkdir -p %{buildroot}/%{_datadir}/applications/
@@ -139,15 +137,6 @@ sed -e "/MimeType/c\MimeType=audio/aac;audio/aacp;audio/x-ms-wma;audio/mpeg;audi
     > %{buildroot}/%{_datadir}/applications/%{name}-ffmpeg_enqueue.desktop
 desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-ffmpeg.desktop
 desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-ffmpeg_enqueue.desktop
-# mad
-sed -e "/MimeType/c\MimeType=audio/mp3;audio/mpeg;" -e "/Actions/,$ c\NoDisplay=true" \
-    src/app/qmmp.desktop \
-    > %{buildroot}/%{_datadir}/applications/%{name}-mad.desktop
-sed -e "/MimeType/c\MimeType=audio/mp3;audio/mpeg;" \
-    src/app/qmmp_enqueue.desktop \
-    > %{buildroot}/%{_datadir}/applications/%{name}-mad_enqueue.desktop
-desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-mad.desktop
-desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-mad_enqueue.desktop
 
 
 %files
@@ -161,8 +150,6 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-mad_enqueue.
 %{_datadir}/applications/%{name}-aac_enqueue.desktop
 %{_datadir}/applications/%{name}-ffmpeg.desktop
 %{_datadir}/applications/%{name}-ffmpeg_enqueue.desktop
-%{_datadir}/applications/%{name}-mad.desktop
-%{_datadir}/applications/%{name}-mad_enqueue.desktop
 
 
 %post
@@ -184,6 +171,10 @@ fi
 
 
 %changelog
+* Tue Jan 17 2017 Karel Volný <kvolny@redhat.com> 1.1.6-1
+- version bump to 1.1.6
+- dropped MAD plugin, now in Fedora (rhbz#1400109)
+
 * Wed Oct 05 2016 Karel Volný <kvolny@redhat.com> 1.1.4-1
 - version bump to 1.1.4
 
