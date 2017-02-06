@@ -1,5 +1,5 @@
 Name:		qmmp-plugins-freeworld
-Version:	1.1.6
+Version:	1.1.7
 Release:	1%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
@@ -171,6 +171,9 @@ fi
 
 
 %changelog
+* Mon Feb 06 2017 Karel Volný <kvolny@redhat.com> 1.1.7-1
+- version bump to 1.1.7
+
 * Tue Jan 17 2017 Karel Volný <kvolny@redhat.com> 1.1.6-1
 - version bump to 1.1.6
 - dropped MAD plugin, now in Fedora (rhbz#1400109)
