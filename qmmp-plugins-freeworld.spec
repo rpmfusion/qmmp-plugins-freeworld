@@ -1,6 +1,6 @@
 Name:		qmmp-plugins-freeworld
 Version:	1.1.8
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
 Group:		Applications/Multimedia
@@ -171,6 +171,9 @@ fi
 
 
 %changelog
+* Sat Apr 29 2017 Leigh Scott <leigh123linux@googlemail.com> - 1.1.8-2
+- Rebuild for ffmpeg update
+
 * Tue Mar 28 2017 Karel Volný <kvolny@redhat.com> 1.1.8-1
 - version bump to 1.1.8
 
