@@ -1,6 +1,6 @@
 Name:		qmmp-plugins-freeworld
-Version:	1.1.8
-Release:	2%{?dist}
+Version:	1.1.9
+Release:	1%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
 Group:		Applications/Multimedia
@@ -21,6 +21,8 @@ BuildRequires:	qt5-linguist
 BuildRequires:	qt5-qtbase-devel
 BuildRequires:	taglib-devel libcurl-devel
 Requires:	qmmp%{?_isa} = %{version}
+
+Supplements:	qmmp
 
 %description
 Qmmp is an audio-player, written with help of Qt library.
@@ -171,6 +173,10 @@ fi
 
 
 %changelog
+* Fri Jun 09 2017 Karel Volný <kvolny@redhat.com> 1.1.9-1
+- version bump to 1.1.9
+- add weak backwards dependency on qmmp (see also rhbz#1450271)
+
 * Sat Apr 29 2017 Leigh Scott <leigh123linux@googlemail.com> - 1.1.8-2
 - Rebuild for ffmpeg update
 
