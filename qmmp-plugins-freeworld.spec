@@ -1,5 +1,5 @@
 Name:		qmmp-plugins-freeworld
-Version:	1.1.10
+Version:	1.1.12
 Release:	1%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
@@ -121,20 +121,20 @@ make DESTDIR=%{buildroot} install -C src/plugins/Transports/mms
 ## install .desktop files for MimeType associations
 mkdir -p %{buildroot}/%{_datadir}/applications/
 # aac
-sed -e "/MimeType/c\MimeType=audio/aac;audio/aacp;" -e "/Actions/,$ c\NoDisplay=true" \
+sed -e "/MimeType/c\MimeType=audio/aac;audio/aacp;audio/x-aac;audio/m4a;audio/x-m4a;" -e "/Actions/,$ c\NoDisplay=true" \
     src/app/qmmp.desktop \
     > %{buildroot}/%{_datadir}/applications/%{name}-aac.desktop
-sed -e "/MimeType/c\MimeType=audio/aac;audio/aacp;" \
+sed -e "/MimeType/c\MimeType=audio/aac;audio/aacp;audio/x-aac;audio/m4a;audio/x-m4a;" \
     src/app/qmmp_enqueue.desktop \
     > %{buildroot}/%{_datadir}/applications/%{name}-aac_enqueue.desktop
 desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-aac.desktop
 desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-aac_enqueue.desktop
 # ffmpeg
-sed -e "/MimeType/c\MimeType=audio/aac;audio/aacp;audio/x-ms-wma;audio/mpeg;audio/x-ffmpeg-shorten;audio/3gpp;audio/3gpp2;audio/mp4;audio/MP4A-LATM;audio/mpeg4-generic;audio/m4a;audio/ac3;audio/eac3;audio/dts;audio/true-hd;audio/x-matroska;" \
+sed -e "/MimeType/c\MimeType=audio/aac;audio/aacp;audio/x-ms-wma;audio/mpeg;audio/x-ffmpeg-shorten;audio/3gpp;audio/3gpp2;audio/mp4;audio/MP4A-LATM;audio/mpeg4-generic;audio/m4a;audio/ac3;audio/eac3;audio/dts;audio/true-hd;audio/x-matroska;audio/x-aac;audio/x-m4a;" \
     -e "/Actions/,$ c\NoDisplay=true" \
     src/app/qmmp.desktop \
     > %{buildroot}/%{_datadir}/applications/%{name}-ffmpeg.desktop
-sed -e "/MimeType/c\MimeType=audio/aac;audio/aacp;audio/x-ms-wma;audio/mpeg;audio/x-ffmpeg-shorten;audio/3gpp;audio/3gpp2;audio/mp4;audio/MP4A-LATM;audio/mpeg4-generic;audio/m4a;audio/ac3;audio/eac3;audio/dts;audio/true-hd;audio/x-matroska;" \
+sed -e "/MimeType/c\MimeType=audio/aac;audio/aacp;audio/x-ms-wma;audio/mpeg;audio/x-ffmpeg-shorten;audio/3gpp;audio/3gpp2;audio/mp4;audio/MP4A-LATM;audio/mpeg4-generic;audio/m4a;audio/ac3;audio/eac3;audio/dts;audio/true-hd;audio/x-matroska;audio/x-aac;audio/x-m4a;" \
     src/app/qmmp_enqueue.desktop \
     > %{buildroot}/%{_datadir}/applications/%{name}-ffmpeg_enqueue.desktop
 desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-ffmpeg.desktop
@@ -173,6 +173,10 @@ fi
 
 
 %changelog
+* Wed Nov 15 2017 Karel Volný <kvolny@redhat.com> 1.1.12-1
+- version bump to 1.1.12
+- add audio/* mimetypes filtered out from qmmp package
+
 * Tue Aug 08 2017 Karel Volný <kvolny@redhat.com> 1.1.10-1
 - version bump to 1.1.10
 
