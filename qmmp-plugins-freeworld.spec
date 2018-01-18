@@ -1,6 +1,6 @@
 Name:		qmmp-plugins-freeworld
 Version:	1.1.12
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
 Group:		Applications/Multimedia
@@ -173,6 +173,9 @@ fi
 
 
 %changelog
+* Thu Jan 18 2018 Leigh Scott <leigh123linux@googlemail.com> - 1.1.12-2
+- Rebuilt for ffmpeg-3.5 git
+
 * Wed Nov 15 2017 Karel Volný <kvolny@redhat.com> 1.1.12-1
 - version bump to 1.1.12
 - add audio/* mimetypes filtered out from qmmp package
