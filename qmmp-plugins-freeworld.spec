@@ -8,6 +8,7 @@ License:	GPLv2+
 URL:		http://qmmp.ylsoftware.com/
 Source:		http://qmmp.ylsoftware.com/files/qmmp-%{version}.tar.bz2
 Source2:	qmmp-filter-provides.sh
+Patch0:		ffmpeg35_buildfix.patch
 %define		_use_internal_dependency_generator 0
 %define		__find_provides %{_builddir}/%{buildsubdir}/qmmp-filter-provides.sh
 
@@ -32,6 +33,7 @@ and also the mplayer plugin for video playback.
 
 %prep
 %setup -q -n qmmp-%{version}
+%patch0 -p1
 cp %{SOURCE2} .
 chmod +x qmmp-filter-provides.sh
 # adjust includes for the header move in latest ffmpeg
