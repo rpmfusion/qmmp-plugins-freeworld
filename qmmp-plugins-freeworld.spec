@@ -1,6 +1,6 @@
 Name:		qmmp-plugins-freeworld
-Version:	1.1.12
-Release:	4%{?dist}
+Version:	1.2.2
+Release:	1%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
 Group:		Applications/Multimedia
@@ -8,7 +8,6 @@ License:	GPLv2+
 URL:		http://qmmp.ylsoftware.com/
 Source:		http://qmmp.ylsoftware.com/files/qmmp-%{version}.tar.bz2
 Source2:	qmmp-filter-provides.sh
-Patch0:		ffmpeg35_buildfix.patch
 %define		_use_internal_dependency_generator 0
 %define		__find_provides %{_builddir}/%{buildsubdir}/qmmp-filter-provides.sh
 
@@ -27,13 +26,12 @@ Supplements:	qmmp
 
 %description
 Qmmp is an audio-player, written with help of Qt library.
-This package contains plugins needed to play AAC, MPEG (.mp3) and WMA files,
+This package contains plugins needed to play AAC and WMA files,
 and also the mplayer plugin for video playback.
 
 
 %prep
 %setup -q -n qmmp-%{version}
-%patch0 -p1
 cp %{SOURCE2} .
 chmod +x qmmp-filter-provides.sh
 # adjust includes for the header move in latest ffmpeg
@@ -65,6 +63,7 @@ sed -i \
 	-D USE_GME:BOOL=FALSE \
 	-D USE_OPUS:BOOL=FALSE \
 	-D USE_SID:BOOL=FALSE \
+	-D USE_ARCHIVE:BOOL=FALSE \
 \
 	-D USE_ALSA:BOOL=FALSE \
 	-D USE_JACK:BOOL=FALSE \
@@ -73,12 +72,14 @@ sed -i \
 	-D USE_PULSE:BOOL=FALSE \
 	-D USE_NULL:BOOL=FALSE \
 	-D USE_WAVEOUT:BOOL=FALSE \
+	-D USE_SHOUT:BOOL=FALSE \
 \
 	-D USE_SRC:BOOL=FALSE \
 	-D USE_BS2B:BOOL=FALSE \
 	-D USE_LADSPA:BOOL=FALSE \
 	-D USE_CROSSFADE:BOOL=FALSE \
 	-D USE_STEREO:BOOL=FALSE \
+	-D USE_FILEWRITER:BOOL=FALSE \
 \
 	-D USE_ANALYZER:BOOL=FALSE \
 	-D USE_PROJECTM:BOOL=FALSE \
@@ -175,6 +176,13 @@ fi
 
 
 %changelog
+* Mon Jun 04 2018 Karel Volný <kvolny@redhat.com> 1.2.2-1
+- version bump to 1.2.2
+
+* Fri Apr 20 2018 Karel Volný <kvolny@redhat.com> 1.2.1-1
+- version bump to 1.2.1
+- removed patch to compile with newer ffmpeg (ffmpeg35_buildfix.patch)
+
 * Thu Mar 08 2018 RPM Fusion Release Engineering <leigh123linux@googlemail.com> - 1.1.12-4
 - Rebuilt for new ffmpeg snapshot
 
