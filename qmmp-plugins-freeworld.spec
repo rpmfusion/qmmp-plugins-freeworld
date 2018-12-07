@@ -121,7 +121,7 @@ sed -i \
 
 %changelog
 * Wed Nov 14 2018 Antonio Trande <sagitter@fedoraproject.org> - 0.8.8-2
-- Rebuild for ffmpeg-3.3.8 on el7
+- Rebuild for ffmpeg-3.4.5 on el7
 - Use CMake3
 - Uncheck legacy ffmpeg
 - Fix opus detection
