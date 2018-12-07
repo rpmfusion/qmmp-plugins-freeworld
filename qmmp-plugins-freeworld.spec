@@ -1,27 +1,27 @@
 Name:		qmmp-plugins-freeworld
 Version:	0.8.8
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
-
-Group:		Applications/Multimedia
 License:	GPLv2+
 URL:		http://qmmp.ylsoftware.com/
-Source:		http://qmmp.ylsoftware.com/files/qmmp-%{version}.tar.bz2
-Source2:	qmmp-filter-provides.sh
+Source0:	http://qmmp.ylsoftware.com/files/qmmp-%{version}.tar.bz2
+Source1:	qmmp-filter-provides.sh
 %define		_use_internal_dependency_generator 0
 %define		__find_provides %{_builddir}/%{buildsubdir}/qmmp-filter-provides.sh
 
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
+# Fix opus detection
+Patch0:        %{name}_fix_opus_version.patch
 
-BuildRequires:	cmake
+BuildRequires:	cmake3
 BuildRequires:	ffmpeg-devel
 BuildRequires:	enca-devel
 BuildRequires:	faad2-devel
+BuildRequires:	opus-devel >= 1.0.2
 BuildRequires:	qt-devel >= 4.3
 BuildRequires:	libmms-devel
 BuildRequires:	taglib-devel libcurl-devel
-#BuildRequires:	qmmp%{?_isa} = %{version}
-#Requires:	qmmp%{?_isa} = %{version}
+
+Requires:	qmmp%{?_isa} = %{version}
 
 %description
 Qmmp is an audio-player, written with help of Qt library.
@@ -30,8 +30,8 @@ and also the mplayer plugin for video playback.
 
 
 %prep
-%setup -q -n qmmp-%{version}
-cp %{SOURCE2} .
+%autosetup -p 1 -n qmmp-%{version}
+cp -p %{SOURCE1} .
 chmod +x qmmp-filter-provides.sh
 # adjust includes for the header move in latest ffmpeg
 sed -i \
@@ -46,8 +46,9 @@ sed -i \
 %build
 # the plugin groups, as separated by newlines, are:
 # Transport, Input, Output, Effect, Visual, General, File Dialogs
-%cmake \
+%cmake3 -Wno-dev \
 	-D USE_CURL:BOOL=FALSE \
+        -D USE_FFMPEG_LEGACY:BOOL=FALSE \
 \
 	-D USE_FLAC:BOOL=FALSE \
 	-D USE_VORBIS:BOOL=FALSE \
@@ -92,30 +93,24 @@ sed -i \
 \
 	-D USE_QMMP_DIALOG:BOOL=FALSE \
 \
-	-D CMAKE_INSTALL_PREFIX=/usr \
+	-D CMAKE_INSTALL_PREFIX=%{_prefix} \
 	-D LIB_DIR=%{_lib} \
 	./
 
-make VERBOSE=1 %{?_smp_mflags} -C src/plugins/Engines/mplayer
-make VERBOSE=1 %{?_smp_mflags} -C src/plugins/Input/aac
-make VERBOSE=1 %{?_smp_mflags} -C src/plugins/Input/ffmpeg
-make VERBOSE=1 %{?_smp_mflags} -C src/plugins/Transports/mms
+%make_build VERBOSE=1 -C src/plugins/Engines/mplayer
+%make_build VERBOSE=1 -C src/plugins/Input/aac
+%make_build VERBOSE=1 -C src/plugins/Input/ffmpeg
+%make_build VERBOSE=1 -C src/plugins/Transports/mms
 
 
 %install
-rm -rf %{buildroot}
-make DESTDIR=%{buildroot} install -C src/plugins/Engines/mplayer
-make DESTDIR=%{buildroot} install -C src/plugins/Input/aac
-make DESTDIR=%{buildroot} install -C src/plugins/Input/ffmpeg
-make DESTDIR=%{buildroot} install -C src/plugins/Transports/mms
-
-
-%clean
-rm -rf %{buildroot}
+%make_install -C src/plugins/Engines/mplayer
+%make_install -C src/plugins/Input/aac
+%make_install -C src/plugins/Input/ffmpeg
+%make_install -C src/plugins/Transports/mms
 
 
 %files
-%defattr(0755,root,root,0755)
 # there's only mplayer plugin now, so own the directory
 %dir %{_libdir}/qmmp/Engines
 %{_libdir}/qmmp/Engines/*.so
@@ -124,12 +119,13 @@ rm -rf %{buildroot}
 %{_libdir}/qmmp/Transports/*.so
 
 
-%post -p /sbin/ldconfig
- 
-%postun -p /sbin/ldconfig
-
-
 %changelog
+* Wed Nov 14 2018 Antonio Trande <sagitter@fedoraproject.org> - 0.8.8-2
+- Rebuild for ffmpeg-3.3.8 on el7
+- Use CMake3
+- Uncheck legacy ffmpeg
+- Fix opus detection
+
 * Mon Jan 02 2017 Karel Volný <kvolny@redhat.com> 0.8.8-1
 - synchronised with EPEL7
 - dropped MAD plugin, now in EPEL (rhbz#1409566)

@@ -1,0 +1,11 @@
+--- a/src/plugins/Input/opus/CMakeLists.orig.txt	2015-08-25 13:39:05.000000000 +0200
++++ b/src/plugins/Input/opus/CMakeLists.txt	2018-11-14 12:16:44.092402418 +0100
+@@ -26,7 +26,7 @@
+ link_directories(${CMAKE_CURRENT_BINARY_DIR}/../../../qmmp)
+ 
+ # libopus and libopusfile
+-pkg_check_modules(OPUS opus>=1.0.2 opusfile>=0.2)
++pkg_check_modules (OPUS opus>=1.0.2)
+ 
+ include_directories(${OPUS_INCLUDE_DIRS}  ${TAGLIB_INCLUDE_DIRS})
+ link_directories(${OPUS_LIBRARY_DIRS} ${TAGLIB_LIBRARY_DIRS})
