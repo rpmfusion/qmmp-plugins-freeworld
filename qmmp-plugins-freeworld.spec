@@ -1,6 +1,6 @@
 Name:		qmmp-plugins-freeworld
 Version:	1.2.4
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
 Group:		Applications/Multimedia
@@ -176,6 +176,9 @@ fi
 
 
 %changelog
+* Mon Mar 04 2019 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 1.2.4-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
+
 * Sun Sep 30 2018 Karel Volný <kvolny@redhat.com> 1.2.4-1
 - version bump to 1.2.4
 
