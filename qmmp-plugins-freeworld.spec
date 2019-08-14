@@ -1,6 +1,6 @@
 Name:		qmmp-plugins-freeworld
-Version:	1.2.4
-Release:	3%{?dist}
+Version:	1.3.3
+Release:	1%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
 Group:		Applications/Multimedia
@@ -108,6 +108,7 @@ sed -i \
 \
 	-D CMAKE_INSTALL_PREFIX=/usr \
 	-D LIB_DIR=%{_lib} \
+	-D PLUGIN_DIR=%{_lib}/qmmp \
 	./
 
 make VERBOSE=1 %{?_smp_mflags} -C src/plugins/Engines/mplayer
@@ -128,20 +129,20 @@ sed -e "/MimeType/c\MimeType=audio/aac;audio/aacp;audio/x-aac;audio/m4a;audio/x-
     src/app/qmmp.desktop \
     > %{buildroot}/%{_datadir}/applications/%{name}-aac.desktop
 sed -e "/MimeType/c\MimeType=audio/aac;audio/aacp;audio/x-aac;audio/m4a;audio/x-m4a;" \
-    src/app/qmmp_enqueue.desktop \
-    > %{buildroot}/%{_datadir}/applications/%{name}-aac_enqueue.desktop
+    src/app/qmmp-enqueue.desktop \
+    > %{buildroot}/%{_datadir}/applications/%{name}-aac-enqueue.desktop
 desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-aac.desktop
-desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-aac_enqueue.desktop
+desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-aac-enqueue.desktop
 # ffmpeg
 sed -e "/MimeType/c\MimeType=audio/aac;audio/aacp;audio/x-ms-wma;audio/mpeg;audio/x-ffmpeg-shorten;audio/3gpp;audio/3gpp2;audio/mp4;audio/MP4A-LATM;audio/mpeg4-generic;audio/m4a;audio/ac3;audio/eac3;audio/dts;audio/true-hd;audio/x-matroska;audio/x-aac;audio/x-m4a;" \
     -e "/Actions/,$ c\NoDisplay=true" \
     src/app/qmmp.desktop \
     > %{buildroot}/%{_datadir}/applications/%{name}-ffmpeg.desktop
 sed -e "/MimeType/c\MimeType=audio/aac;audio/aacp;audio/x-ms-wma;audio/mpeg;audio/x-ffmpeg-shorten;audio/3gpp;audio/3gpp2;audio/mp4;audio/MP4A-LATM;audio/mpeg4-generic;audio/m4a;audio/ac3;audio/eac3;audio/dts;audio/true-hd;audio/x-matroska;audio/x-aac;audio/x-m4a;" \
-    src/app/qmmp_enqueue.desktop \
-    > %{buildroot}/%{_datadir}/applications/%{name}-ffmpeg_enqueue.desktop
+    src/app/qmmp-enqueue.desktop \
+    > %{buildroot}/%{_datadir}/applications/%{name}-ffmpeg-enqueue.desktop
 desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-ffmpeg.desktop
-desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-ffmpeg_enqueue.desktop
+desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-ffmpeg-enqueue.desktop
 
 
 %files
@@ -152,9 +153,9 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-ffmpeg_enque
 %{_libdir}/qmmp/Input/*.so
 %{_libdir}/qmmp/Transports/*.so
 %{_datadir}/applications/%{name}-aac.desktop
-%{_datadir}/applications/%{name}-aac_enqueue.desktop
+%{_datadir}/applications/%{name}-aac-enqueue.desktop
 %{_datadir}/applications/%{name}-ffmpeg.desktop
-%{_datadir}/applications/%{name}-ffmpeg_enqueue.desktop
+%{_datadir}/applications/%{name}-ffmpeg-enqueue.desktop
 
 
 %post
@@ -176,6 +177,9 @@ fi
 
 
 %changelog
+* Wed Aug 14 2019 Karel Volný <kvolny@redhat.com> 1.3.3-1
+- version bump to 1.3.3
+
 * Wed Aug 07 2019 Leigh Scott <leigh123linux@gmail.com> - 1.2.4-3
 - Rebuild for new ffmpeg version
 
