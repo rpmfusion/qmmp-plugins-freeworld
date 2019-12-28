@@ -1,5 +1,5 @@
 Name:		qmmp-plugins-freeworld
-Version:	1.3.3
+Version:	1.3.5
 Release:	1%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
@@ -177,6 +177,9 @@ fi
 
 
 %changelog
+* Sat Dec 28 2019 Karel Volný <kvolny@redhat.com> 1.3.5-1
+- version bump to 1.3.5
+
 * Wed Aug 14 2019 Karel Volný <kvolny@redhat.com> 1.3.3-1
 - version bump to 1.3.3
 
