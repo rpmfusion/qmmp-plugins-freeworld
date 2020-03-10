@@ -1,6 +1,6 @@
 Name:		qmmp-plugins-freeworld
-Version:	1.3.5
-Release:	3%{?dist}
+Version:	1.3.6
+Release:	1%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
 Group:		Applications/Multimedia
@@ -160,23 +160,16 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-ffmpeg-enque
 
 %post
 /sbin/ldconfig
-%{_bindir}/update-desktop-database &> /dev/null || :
-touch --no-create %{_datadir}/icons/hicolor || :
-if [ -x %{_bindir}/gtk-update-icon-cache ]; then
-	%{_bindir}/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor || :
-fi
  
 %postun
 /sbin/ldconfig
-/sbin/ldconfig
-%{_bindir}/update-desktop-database &> /dev/null || :
-touch --no-create %{_datadir}/icons/hicolor || :
-if [ -x %{_bindir}/gtk-update-icon-cache ]; then
-	%{_bindir}/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor || :
-fi
 
 
 %changelog
+* Tue Mar 10 2020 leigh123linux <leigh123linux@googlemail.com> - 1.3.6-1
+- version bump to 1.3.6
+- Remove obsolete scriptlets
+
 * Sat Feb 22 2020 RPM Fusion Release Engineering <leigh123linux@googlemail.com> - 1.3.5-3
 - Rebuild for ffmpeg-4.3 git
 
