@@ -1,5 +1,5 @@
 Name:		qmmp-plugins-freeworld
-Version:	1.3.7
+Version:	1.4.1
 Release:	1%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
@@ -80,12 +80,14 @@ sed -i \
 	-D USE_CROSSFADE:BOOL=FALSE \
 	-D USE_STEREO:BOOL=FALSE \
 	-D USE_FILEWRITER:BOOL=FALSE \
+	-D USE_MONOTOSTEREO:BOOL=FALSE \
 \
 	-D USE_ANALYZER:BOOL=FALSE \
 	-D USE_PROJECTM:BOOL=FALSE \
 \
 	-D USE_MPRIS:BOOL=FALSE \
 	-D USE_SCROBBLER:BOOL=FALSE \
+	-D USE_LISTENBRAINZ:BOOL=FALSE \
 	-D USE_STATICON:BOOL=FALSE \
 	-D USE_NOTIFIER:BOOL=FALSE \
 	-D USE_LYRICS:BOOL=FALSE \
@@ -102,6 +104,8 @@ sed -i \
 	-D USE_SB:BOOL=FALSE \
 	-D USE_TRACKCHANGE:BOOL=FALSE \
 	-D USE_COPYPASTE:BOOL=FALSE \
+	-D USE_HISTORY:BOOL=FALSE \
+	-D USE_SLEEPINHIBITOR:BOOL=FALSE \
 \
 	-D USE_QMMP_DIALOG:BOOL=FALSE \
 	-D USE_TWO_PANEL_DIALOG:BOOL=FALSE \
@@ -111,17 +115,17 @@ sed -i \
 	-D PLUGIN_DIR=%{_lib}/qmmp \
 	./
 
-make VERBOSE=1 %{?_smp_mflags} -C src/plugins/Engines/mplayer
-make VERBOSE=1 %{?_smp_mflags} -C src/plugins/Input/aac
-make VERBOSE=1 %{?_smp_mflags} -C src/plugins/Input/ffmpeg
-make VERBOSE=1 %{?_smp_mflags} -C src/plugins/Transports/mms
+make VERBOSE=1 %{?_smp_mflags} -C %{_vpath_builddir}/src/plugins/Engines/mplayer
+make VERBOSE=1 %{?_smp_mflags} -C %{_vpath_builddir}/src/plugins/Input/aac
+make VERBOSE=1 %{?_smp_mflags} -C %{_vpath_builddir}/src/plugins/Input/ffmpeg
+make VERBOSE=1 %{?_smp_mflags} -C %{_vpath_builddir}/src/plugins/Transports/mms
 
 
 %install
-make DESTDIR=%{buildroot} install -C src/plugins/Engines/mplayer
-make DESTDIR=%{buildroot} install -C src/plugins/Input/aac
-make DESTDIR=%{buildroot} install -C src/plugins/Input/ffmpeg
-make DESTDIR=%{buildroot} install -C src/plugins/Transports/mms
+make DESTDIR=%{buildroot} install -C %{_vpath_builddir}/src/plugins/Engines/mplayer
+make DESTDIR=%{buildroot} install -C %{_vpath_builddir}/src/plugins/Input/aac
+make DESTDIR=%{buildroot} install -C %{_vpath_builddir}/src/plugins/Input/ffmpeg
+make DESTDIR=%{buildroot} install -C %{_vpath_builddir}/src/plugins/Transports/mms
 ## install .desktop files for MimeType associations
 mkdir -p %{buildroot}/%{_datadir}/applications/
 # aac
@@ -166,6 +170,10 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-ffmpeg-enque
 
 
 %changelog
+* Tue Aug 18 2020 Karel Volný <kvolny@redhat.com> 1.4.1-1
+- version bump to 1.4.1
+- adapted to F33 System-Wide Change: CMake to do out-of-source builds
+
 * Tue Mar 31 2020 Karel Volný <kvolny@redhat.com> 1.3.7-1
 - version bump to 1.3.7
 
