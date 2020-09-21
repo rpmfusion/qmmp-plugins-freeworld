@@ -1,5 +1,5 @@
 Name:		qmmp-plugins-freeworld
-Version:	1.4.1
+Version:	1.4.2
 Release:	1%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
@@ -170,6 +170,9 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-ffmpeg-enque
 
 
 %changelog
+* Mon Sep 21 2020 Karel Volný <kvolny@redhat.com> 1.4.2-1
+- version bump to 1.4.2
+
 * Tue Aug 18 2020 Karel Volný <kvolny@redhat.com> 1.4.1-1
 - version bump to 1.4.1
 - adapted to F33 System-Wide Change: CMake to do out-of-source builds
