@@ -1,6 +1,6 @@
 Name:		qmmp-plugins-freeworld
 Version:	1.4.2
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
 Group:		Applications/Multimedia
@@ -170,6 +170,9 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-ffmpeg-enque
 
 
 %changelog
+* Thu Feb 04 2021 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 1.4.2-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
+
 * Fri Jan  1 2021 Leigh Scott <leigh123linux@gmail.com> - 1.4.2-2
 - Rebuilt for new ffmpeg snapshot
 
