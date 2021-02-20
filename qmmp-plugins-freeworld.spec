@@ -8,18 +8,21 @@ License:	GPLv2+
 URL:		http://qmmp.ylsoftware.com/
 Source:		http://qmmp.ylsoftware.com/files/qmmp-%{version}.tar.bz2
 Source2:	qmmp-filter-provides.sh
+Patch0:		qmmp-gcc11.patch
 %define		_use_internal_dependency_generator 0
-%define		__find_provides %{_builddir}/%{buildsubdir}/qmmp-filter-provides.sh
+%define		__find_provides %{SOURCE2}
 
 BuildRequires:	cmake
 BuildRequires:	desktop-file-utils
-BuildRequires:	ffmpeg-devel
 BuildRequires:	enca-devel
 BuildRequires:	faad2-devel
+BuildRequires:	ffmpeg-devel
+BuildRequires:	libcurl-devel
 BuildRequires:	libmms-devel
 BuildRequires:	qt5-linguist
 BuildRequires:	qt5-qtbase-devel
-BuildRequires:	taglib-devel libcurl-devel
+BuildRequires:	taglib-devel >= 1.10
+BuildRequires:	zlib-devel
 Requires:	qmmp%{?_isa} = %{version}
 
 Supplements:	qmmp
@@ -32,8 +35,7 @@ and also the mplayer plugin for video playback.
 
 %prep
 %setup -q -n qmmp-%{version}
-cp %{SOURCE2} .
-chmod +x qmmp-filter-provides.sh
+%patch0 -p1
 # adjust includes for the header move in latest ffmpeg
 sed -i \
 	-e 's|<avcodec.h|<libavcodec/avcodec.h|g' \
@@ -172,6 +174,8 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-ffmpeg-enque
 %changelog
 * Thu Feb 04 2021 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 1.4.2-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
+- Add GCC patch from Fedora proper
+- Sync with Fedora proper
 
 * Fri Jan  1 2021 Leigh Scott <leigh123linux@gmail.com> - 1.4.2-2
 - Rebuilt for new ffmpeg snapshot
