@@ -1,5 +1,5 @@
 Name:		qmmp-plugins-freeworld
-Version:	1.4.4
+Version:	1.4.5
 Release:	1%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
@@ -8,7 +8,6 @@ License:	GPLv2+
 URL:		http://qmmp.ylsoftware.com/
 Source:		http://qmmp.ylsoftware.com/files/qmmp-%{version}.tar.bz2
 Source2:	qmmp-filter-provides.sh
-Patch0:		qmmp-gcc11.patch
 %define		_use_internal_dependency_generator 0
 %define		__find_provides %{SOURCE2}
 
@@ -35,7 +34,6 @@ and also the mplayer plugin for video playback.
 
 %prep
 %setup -q -n qmmp-%{version}
-%patch0 -p1
 # adjust includes for the header move in latest ffmpeg
 sed -i \
 	-e 's|<avcodec.h|<libavcodec/avcodec.h|g' \
@@ -172,6 +170,10 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-ffmpeg-enque
 
 
 %changelog
+* Thu Apr 29 2021 Karel Volný <kvolny@redhat.com> 1.4.5-1
+- version bump to 1.4.5
+- fixes GCC 11 issue, patch removed
+
 * Tue Feb 23 2021 Karel Volný <kvolny@redhat.com> 1.4.4-1
 - version bump to 1.4.4
 
