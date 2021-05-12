@@ -1,5 +1,5 @@
 Name:		qmmp-plugins-freeworld
-Version:	1.4.5
+Version:	1.4.6
 Release:	1%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
@@ -170,6 +170,9 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-ffmpeg-enque
 
 
 %changelog
+* Wed May 12 2021 Karel Volný <kvolny@redhat.com> 1.4.6-1
+- version bump to 1.4.6
+
 * Thu Apr 29 2021 Karel Volný <kvolny@redhat.com> 1.4.5-1
 - version bump to 1.4.5
 - fixes GCC 11 issue, patch removed
