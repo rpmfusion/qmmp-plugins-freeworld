@@ -1,6 +1,6 @@
 Name:		qmmp-plugins-freeworld
 Version:	1.5.1
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
 Group:		Applications/Multimedia
@@ -170,6 +170,9 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-ffmpeg-enque
 
 
 %changelog
+* Tue Aug 03 2021 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 1.5.1-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
+
 * Mon Jul 19 2021 Karel Volný <kvolny@redhat.com> 1.5.1-1
 - version bump to 1.5.1
 
