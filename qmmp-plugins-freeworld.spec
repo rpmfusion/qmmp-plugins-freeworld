@@ -1,15 +1,12 @@
 Name:		qmmp-plugins-freeworld
-Version:	1.5.1
-Release:	4%{?dist}
+Version:	2.0.4
+Release:	1%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
 Group:		Applications/Multimedia
 License:	GPLv2+
 URL:		http://qmmp.ylsoftware.com/
 Source:		http://qmmp.ylsoftware.com/files/qmmp-%{version}.tar.bz2
-Source2:	qmmp-filter-provides.sh
-%define		_use_internal_dependency_generator 0
-%define		__find_provides %{SOURCE2}
 
 BuildRequires:	cmake
 BuildRequires:	desktop-file-utils
@@ -18,13 +15,15 @@ BuildRequires:	faad2-devel
 BuildRequires:	ffmpeg-devel
 BuildRequires:	libcurl-devel
 BuildRequires:	libmms-devel
-BuildRequires:	qt5-linguist
-BuildRequires:	qt5-qtbase-devel
+BuildRequires:	qt6-qtmultimedia-devel
+BuildRequires:	qt6-qttools-devel
 BuildRequires:	taglib-devel >= 1.10
 BuildRequires:	zlib-devel
 Requires:	qmmp%{?_isa} = %{version}
 
 Supplements:	qmmp
+
+%global __provides_exclude_from ^%{_libdir}/qmmp/.*\\.so$
 
 %description
 Qmmp is an audio-player, written with help of Qt library.
@@ -112,8 +111,7 @@ sed -i \
 \
 	-D CMAKE_INSTALL_PREFIX=/usr \
 	-D LIB_DIR=%{_lib} \
-	-D PLUGIN_DIR=%{_lib}/qmmp \
-	./
+	-D PLUGIN_DIR=%{_lib}/qmmp
 
 make VERBOSE=1 %{?_smp_mflags} -C %{_vpath_builddir}/src/plugins/Engines/mplayer
 make VERBOSE=1 %{?_smp_mflags} -C %{_vpath_builddir}/src/plugins/Input/aac
@@ -170,6 +168,12 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-ffmpeg-enque
 
 
 %changelog
+* Fri Apr 08 2022 Karel Volný <kvolny@redhat.com> 2.0.4-1
+- version bump to 2.0.4
+- uses Qt6
+- fix provides filtering
+- update cmake usage
+
 * Wed Feb 09 2022 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 1.5.1-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_36_Mass_Rebuild
 
