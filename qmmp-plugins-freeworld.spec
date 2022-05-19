@@ -1,5 +1,5 @@
 Name:		qmmp-plugins-freeworld
-Version:	2.0.4
+Version:	2.1.0
 Release:	1%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
@@ -53,7 +53,7 @@ sed -i \
 	-D USE_VORBIS:BOOL=FALSE \
 	-D USE_MAD:BOOL=FALSE \
 	-D USE_MPC:BOOL=FALSE \
-	-D USE_MODPLUG:BOOL=FALSE \
+	-D USE_XMP:BOOL=FALSE \
 	-D USE_SNDFILE:BOOL=FALSE \
 	-D USE_WAVPACK:BOOL=FALSE \
 	-D USE_CUE:BOOL=FALSE \
@@ -168,6 +168,9 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-ffmpeg-enque
 
 
 %changelog
+* Thu May 19 2022 Karel Volný <kvolny@redhat.com> 2.1.0-1
+- version bump to 2.1.0
+
 * Fri Apr 08 2022 Karel Volný <kvolny@redhat.com> 2.0.4-1
 - version bump to 2.0.4
 - uses Qt6
