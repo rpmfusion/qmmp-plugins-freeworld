@@ -1,5 +1,5 @@
 Name:		qmmp-plugins-freeworld
-Version:	2.1.0
+Version:	2.1.1
 Release:	1%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
@@ -168,6 +168,9 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-ffmpeg-enque
 
 
 %changelog
+* Tue Jun 14 2022 Karel Volný <kvolny@redhat.com> 2.1.1-1
+- version bump to 2.1.1
+
 * Thu May 19 2022 Karel Volný <kvolny@redhat.com> 2.1.0-1
 - version bump to 2.1.0
 
