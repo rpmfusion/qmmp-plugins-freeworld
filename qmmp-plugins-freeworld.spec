@@ -1,6 +1,6 @@
 Name:		qmmp-plugins-freeworld
 Version:	2.1.2
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
 Group:		Applications/Multimedia
@@ -12,7 +12,6 @@ BuildRequires:	cmake
 BuildRequires:	desktop-file-utils
 BuildRequires:	enca-devel
 BuildRequires:	faad2-devel
-BuildRequires:	ffmpeg-devel
 BuildRequires:	libcurl-devel
 BuildRequires:	libmms-devel
 BuildRequires:	qt6-qtmultimedia-devel
@@ -33,14 +32,6 @@ and also the mplayer plugin for video playback.
 
 %prep
 %setup -q -n qmmp-%{version}
-# adjust includes for the header move in latest ffmpeg
-sed -i \
-	-e 's|<avcodec.h|<libavcodec/avcodec.h|g' \
-	-e 's|g/avcodec.h|g/libavcodec/avcodec.h|g' \
-	-e 's|<avformat.h|<libavformat/avformat.h|g' \
-	-e 's|g/avformat.h|g/libavformat/avformat.h|g' \
-	src/plugins/Input/ffmpeg/decoder_ffmpeg.h \
-	src/plugins/Input/ffmpeg/decoderffmpegfactory.cpp
 
 
 %build
@@ -49,6 +40,7 @@ sed -i \
 %cmake \
 	-D USE_CURL:BOOL=FALSE \
 \
+	-D USE_FFMPEG:BOOL=FALSE \
 	-D USE_FLAC:BOOL=FALSE \
 	-D USE_VORBIS:BOOL=FALSE \
 	-D USE_MAD:BOOL=FALSE \
@@ -115,14 +107,12 @@ sed -i \
 
 make VERBOSE=1 %{?_smp_mflags} -C %{_vpath_builddir}/src/plugins/Engines/mplayer
 make VERBOSE=1 %{?_smp_mflags} -C %{_vpath_builddir}/src/plugins/Input/aac
-make VERBOSE=1 %{?_smp_mflags} -C %{_vpath_builddir}/src/plugins/Input/ffmpeg
 make VERBOSE=1 %{?_smp_mflags} -C %{_vpath_builddir}/src/plugins/Transports/mms
 
 
 %install
 make DESTDIR=%{buildroot} install -C %{_vpath_builddir}/src/plugins/Engines/mplayer
 make DESTDIR=%{buildroot} install -C %{_vpath_builddir}/src/plugins/Input/aac
-make DESTDIR=%{buildroot} install -C %{_vpath_builddir}/src/plugins/Input/ffmpeg
 make DESTDIR=%{buildroot} install -C %{_vpath_builddir}/src/plugins/Transports/mms
 ## install .desktop files for MimeType associations
 mkdir -p %{buildroot}/%{_datadir}/applications/
@@ -135,16 +125,6 @@ sed -e "/MimeType/c\MimeType=audio/aac;audio/aacp;audio/x-aac;audio/m4a;audio/x-
     > %{buildroot}/%{_datadir}/applications/%{name}-aac-enqueue.desktop
 desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-aac.desktop
 desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-aac-enqueue.desktop
-# ffmpeg
-sed -e "/MimeType/c\MimeType=audio/aac;audio/aacp;audio/x-ms-wma;audio/mpeg;audio/x-ffmpeg-shorten;audio/3gpp;audio/3gpp2;audio/mp4;audio/MP4A-LATM;audio/mpeg4-generic;audio/m4a;audio/ac3;audio/eac3;audio/dts;audio/true-hd;audio/x-matroska;audio/x-aac;audio/x-m4a;" \
-    -e "/Actions/,$ c\NoDisplay=true" \
-    src/app/qmmp.desktop \
-    > %{buildroot}/%{_datadir}/applications/%{name}-ffmpeg.desktop
-sed -e "/MimeType/c\MimeType=audio/aac;audio/aacp;audio/x-ms-wma;audio/mpeg;audio/x-ffmpeg-shorten;audio/3gpp;audio/3gpp2;audio/mp4;audio/MP4A-LATM;audio/mpeg4-generic;audio/m4a;audio/ac3;audio/eac3;audio/dts;audio/true-hd;audio/x-matroska;audio/x-aac;audio/x-m4a;" \
-    src/app/qmmp-enqueue.desktop \
-    > %{buildroot}/%{_datadir}/applications/%{name}-ffmpeg-enqueue.desktop
-desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-ffmpeg.desktop
-desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-ffmpeg-enqueue.desktop
 
 
 %files
@@ -156,8 +136,6 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-ffmpeg-enque
 %{_libdir}/qmmp/Transports/*.so
 %{_datadir}/applications/%{name}-aac.desktop
 %{_datadir}/applications/%{name}-aac-enqueue.desktop
-%{_datadir}/applications/%{name}-ffmpeg.desktop
-%{_datadir}/applications/%{name}-ffmpeg-enqueue.desktop
 
 
 %post
@@ -168,6 +146,9 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-ffmpeg-enque
 
 
 %changelog
+* Mon Feb 27 2023 Karel Volný <kvolny@redhat.com> 2.1.2-2
+- disable ffmpeg as ffmpeg-free is now in Fedora
+
 * Sat Feb 25 2023 Sérgio Basto <sergio@serjux.com> - 2.1.2-1
 - Update qmmp-plugins-freeworld to 2.1.2
 
