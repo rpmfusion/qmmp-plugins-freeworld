@@ -1,6 +1,6 @@
 Name:		qmmp-plugins-freeworld
 Version:	2.1.2
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
 Group:		Applications/Multimedia
@@ -146,6 +146,9 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-aac-enqueue.
 
 
 %changelog
+* Wed Aug 02 2023 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 2.1.2-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_39_Mass_Rebuild
+
 * Mon Feb 27 2023 Karel Volný <kvolny@redhat.com> 2.1.2-2
 - disable ffmpeg as ffmpeg-free is now in Fedora
 
