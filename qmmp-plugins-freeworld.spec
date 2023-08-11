@@ -1,12 +1,12 @@
 Name:		qmmp-plugins-freeworld
-Version:	2.1.2
-Release:	3%{?dist}
+Version:	2.1.4
+Release:	1%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
 Group:		Applications/Multimedia
 License:	GPLv2+
 URL:		https://qmmp.ylsoftware.com/
-Source:		https://qmmp.ylsoftware.com/files/qmmp/2.1/qmmp-%{version}.tar.bz2
+Source:		%url/files/qmmp/2.1/qmmp-%{version}.tar.bz2
 
 BuildRequires:	cmake
 BuildRequires:	desktop-file-utils
@@ -146,6 +146,9 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-aac-enqueue.
 
 
 %changelog
+* Fri Aug 11 2023 Leigh Scott <leigh123linux@gmail.com> - 2.1.4-1
+- Update qmmp-plugins-freeworld to 2.1.4
+
 * Wed Aug 02 2023 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 2.1.2-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_39_Mass_Rebuild
 
