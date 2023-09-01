@@ -1,5 +1,5 @@
 Name:		qmmp-plugins-freeworld
-Version:	2.1.4
+Version:	2.1.5
 Release:	1%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
@@ -13,7 +13,6 @@ BuildRequires:	desktop-file-utils
 BuildRequires:	enca-devel
 BuildRequires:	faad2-devel
 BuildRequires:	libcurl-devel
-BuildRequires:	libmms-devel
 BuildRequires:	qt6-qtmultimedia-devel
 BuildRequires:	qt6-qttools-devel
 BuildRequires:	taglib-devel >= 1.10
@@ -39,6 +38,7 @@ and also the mplayer plugin for video playback.
 # Transport, Input, Output, Effect, Visual, General, File Dialogs
 %cmake \
 	-D USE_CURL:BOOL=FALSE \
+	-D USE_MMS:BOOL=FALSE \
 \
 	-D USE_FFMPEG:BOOL=FALSE \
 	-D USE_FLAC:BOOL=FALSE \
@@ -107,13 +107,11 @@ and also the mplayer plugin for video playback.
 
 make VERBOSE=1 %{?_smp_mflags} -C %{_vpath_builddir}/src/plugins/Engines/mplayer
 make VERBOSE=1 %{?_smp_mflags} -C %{_vpath_builddir}/src/plugins/Input/aac
-make VERBOSE=1 %{?_smp_mflags} -C %{_vpath_builddir}/src/plugins/Transports/mms
 
 
 %install
 make DESTDIR=%{buildroot} install -C %{_vpath_builddir}/src/plugins/Engines/mplayer
 make DESTDIR=%{buildroot} install -C %{_vpath_builddir}/src/plugins/Input/aac
-make DESTDIR=%{buildroot} install -C %{_vpath_builddir}/src/plugins/Transports/mms
 ## install .desktop files for MimeType associations
 mkdir -p %{buildroot}/%{_datadir}/applications/
 # aac
@@ -146,6 +144,10 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-aac-enqueue.
 
 
 %changelog
+* Fri Sep 01 2023 Karel Volný <kvolny@redhat.com> 2.1.5-1
+- version bump to 2.1.5
+- drop MMS transport as it is in Fedora now (rhbz#2235608)
+
 * Fri Aug 11 2023 Leigh Scott <leigh123linux@gmail.com> - 2.1.4-1
 - Update qmmp-plugins-freeworld to 2.1.4
 
