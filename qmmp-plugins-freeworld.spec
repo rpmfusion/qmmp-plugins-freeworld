@@ -131,7 +131,6 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-aac-enqueue.
 %{_libdir}/qmmp/Engines/*.so
 # Input & Transports dirs are owned by qmmp already
 %{_libdir}/qmmp/Input/*.so
-%{_libdir}/qmmp/Transports/*.so
 %{_datadir}/applications/%{name}-aac.desktop
 %{_datadir}/applications/%{name}-aac-enqueue.desktop
 
