@@ -1,6 +1,6 @@
 Name:		qmmp-plugins-freeworld
 Version:	2.1.5
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
 Group:		Applications/Multimedia
@@ -143,6 +143,9 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-aac-enqueue.
 
 
 %changelog
+* Wed Nov 08 2023 Leigh Scott <leigh123linux@gmail.com> - 2.1.5-2
+- Rebuild for new faad2 version
+
 * Fri Sep 01 2023 Karel Volný <kvolny@redhat.com> 2.1.5-1
 - version bump to 2.1.5
 - drop MMS transport as it is in Fedora now (rhbz#2235608)
