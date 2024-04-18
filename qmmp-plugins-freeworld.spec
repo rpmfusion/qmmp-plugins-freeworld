@@ -1,6 +1,6 @@
 Name:		qmmp-plugins-freeworld
-Version:	2.1.5
-Release:	3%{?dist}
+Version:	2.1.7
+Release:	1%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
 Group:		Applications/Multimedia
@@ -135,14 +135,11 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-aac-enqueue.
 %{_datadir}/applications/%{name}-aac-enqueue.desktop
 
 
-%post
-/sbin/ldconfig
- 
-%postun
-/sbin/ldconfig
-
-
 %changelog
+* Thu Apr 18 2024 Karel Volný <kvolny@redhat.com> 2.1.7-1
+- version bump to 2.1.7
+- removed ldconfig
+
 * Sun Feb 04 2024 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 2.1.5-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_40_Mass_Rebuild
 
