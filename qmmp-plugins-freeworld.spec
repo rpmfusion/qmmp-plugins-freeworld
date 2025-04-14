@@ -1,12 +1,12 @@
 Name:		qmmp-plugins-freeworld
-Version:	2.2.3
+Version:	2.2.4
 Release:	1%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
 Group:		Applications/Multimedia
 License:	GPLv2+
 URL:		https://qmmp.ylsoftware.com/
-Source:		%url/files/qmmp/2.1/qmmp-%{version}.tar.bz2
+Source:		%url/files/qmmp/2.2/qmmp-%{version}.tar.bz2
 
 BuildRequires:	cmake
 BuildRequires:	desktop-file-utils
@@ -136,6 +136,9 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-aac-enqueue.
 
 
 %changelog
+* Mon Apr 14 2025 Karel Volný <kvolny@redhat.com> 2.2.4-1
+- version bump to 2.2.4
+
 * Fri Feb 07 2025 Karel Volný <kvolny@redhat.com> 2.2.3-1
 - version bump to 2.2.3
 
