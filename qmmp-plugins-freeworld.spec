@@ -1,12 +1,12 @@
 Name:		qmmp-plugins-freeworld
-Version:	2.2.8
+Version:	2.3.0
 Release:	1%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
 Group:		Applications/Multimedia
 License:	GPLv2+
 URL:		https://qmmp.ylsoftware.com/
-Source:		%url/files/qmmp/2.2/qmmp-%{version}.tar.bz2
+Source:		%url/files/qmmp/2.3/qmmp-%{version}.tar.bz2
 
 BuildRequires:	cmake
 BuildRequires:	desktop-file-utils
@@ -25,8 +25,7 @@ Supplements:	qmmp
 
 %description
 Qmmp is an audio-player, written with help of Qt library.
-This package contains plugins needed to play AAC and WMA files,
-and also the mplayer plugin for video playback.
+This package contains plugin needed to play AAC files.
 
 
 %prep
@@ -105,12 +104,10 @@ and also the mplayer plugin for video playback.
 	-D LIB_DIR=%{_lib} \
 	-D PLUGIN_DIR=%{_lib}/qmmp
 
-make VERBOSE=1 %{?_smp_mflags} -C %{_vpath_builddir}/src/plugins/Engines/mplayer
 make VERBOSE=1 %{?_smp_mflags} -C %{_vpath_builddir}/src/plugins/Input/aac
 
 
 %install
-make DESTDIR=%{buildroot} install -C %{_vpath_builddir}/src/plugins/Engines/mplayer
 make DESTDIR=%{buildroot} install -C %{_vpath_builddir}/src/plugins/Input/aac
 ## install .desktop files for MimeType associations
 mkdir -p %{buildroot}/%{_datadir}/applications/
@@ -126,9 +123,6 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-aac-enqueue.
 
 
 %files
-# there's only mplayer plugin now, so own the directory
-%dir %{_libdir}/qmmp/Engines
-%{_libdir}/qmmp/Engines/*.so
 # Input & Transports dirs are owned by qmmp already
 %{_libdir}/qmmp/Input/*.so
 %{_datadir}/applications/%{name}-aac.desktop
@@ -136,6 +130,10 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-aac-enqueue.
 
 
 %changelog
+* Tue Oct 21 2025 Karel Volný <kvolny@redhat.com> 2.3.0-1
+- version bump to 2.3.0
+- drops mplayer support (moved to plugin-pack while obsoleted by mpv)
+
 * Thu Sep 04 2025 Karel Volný <kvolny@redhat.com> 2.2.8-1
 - version bump to 2.2.8
 
