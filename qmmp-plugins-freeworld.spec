@@ -1,3 +1,6 @@
+# Use make instead of ninja
+%global _cmake_generator "Unix Makefiles"
+
 Name:		qmmp-plugins-freeworld
 Version:	2.3.2
 Release:	1%{?dist}
@@ -9,6 +12,7 @@ URL:		https://qmmp.ylsoftware.com/
 Source:		%url/files/qmmp/2.3/qmmp-%{version}.tar.bz2
 
 BuildRequires:	cmake
+BuildRequires:	make
 BuildRequires:	desktop-file-utils
 BuildRequires:	enca-devel
 BuildRequires:	faad2-devel
