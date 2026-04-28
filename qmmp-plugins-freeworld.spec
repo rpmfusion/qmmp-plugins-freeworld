@@ -1,6 +1,3 @@
-# Use make instead of ninja
-%global _cmake_generator "Unix Makefiles"
-
 Name:		qmmp-plugins-freeworld
 Version:	2.3.2
 Release:	1%{?dist}
@@ -12,7 +9,6 @@ URL:		https://qmmp.ylsoftware.com/
 Source:		%url/files/qmmp/2.3/qmmp-%{version}.tar.bz2
 
 BuildRequires:	cmake
-BuildRequires:	make
 BuildRequires:	desktop-file-utils
 BuildRequires:	enca-devel
 BuildRequires:	faad2-devel
@@ -108,11 +104,11 @@ This package contains plugin needed to play AAC files.
 	-D LIB_DIR=%{_lib} \
 	-D PLUGIN_DIR=%{_lib}/qmmp
 
-make VERBOSE=1 %{?_smp_mflags} -C %{_vpath_builddir}/src/plugins/Input/aac
+%cmake_build --target aac
 
 
 %install
-make DESTDIR=%{buildroot} install -C %{_vpath_builddir}/src/plugins/Input/aac
+DESTDIR=%{buildroot} %__cmake --install %{_vpath_builddir}/src/plugins/Input/aac
 ## install .desktop files for MimeType associations
 mkdir -p %{buildroot}/%{_datadir}/applications/
 # aac
@@ -136,6 +132,7 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-aac-enqueue.
 %changelog
 * Fri Apr 17 2026 Karel Volný <kvolny@redhat.com> 2.3.2-1
 - version bump to 2.3.2
+- replaced make with %%cmake
 
 * Tue Feb 10 2026 Nicolas Chauvet <kwizart@gmail.com> - 2.3.1-1
 - Update to 2.3.1
