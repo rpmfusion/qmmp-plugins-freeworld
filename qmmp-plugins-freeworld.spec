@@ -1,6 +1,6 @@
 Name:		qmmp-plugins-freeworld
 Version:	2.3.2
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Plugins for qmmp (Qt-based multimedia player)
 
 Group:		Applications/Multimedia
@@ -130,6 +130,9 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-aac-enqueue.
 
 
 %changelog
+* Wed Apr 29 2026 Sérgio Basto <sergio@serjux.com> - 2.3.2-2
+- Bump release
+
 * Fri Apr 17 2026 Karel Volný <kvolny@redhat.com> 2.3.2-1
 - version bump to 2.3.2
 - replaced make with %%cmake
